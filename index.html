@@ -853,9 +853,20 @@
 
   <script>
     // ===== LOADER =====
-    window.addEventListener('load', () => {
-      setTimeout(() => document.querySelector('.loader').classList.add('hidden'), 800);
-    });
+    function hideLoader() {
+      const loader = document.querySelector('.loader');
+      if (loader && !loader.classList.contains('hidden')) {
+        loader.classList.add('hidden');
+      }
+    }
+    // DOMContentLoaded で即非表示（画像の読み込みを待たない）
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => setTimeout(hideLoader, 800));
+    } else {
+      setTimeout(hideLoader, 800);
+    }
+    // 万が一のフォールバック：最大3秒で必ず非表示
+    setTimeout(hideLoader, 3000);
 
     // ===== HAMBURGER MENU =====
     const menuToggle = document.querySelector('.menu-toggle');
