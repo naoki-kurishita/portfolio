@@ -3,8 +3,1035 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  
-  
-   
+  <title>NAOKI KURISHITA | Retoucher Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@200;300;400;500&family=Noto+Sans+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f5f5f5;
+      --bg-dark: #0a0a0a;
+      --text: #1a1a1a;
+      --text-light: #888;
+      --accent: #999;
+      --border: #ddd;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Inter', 'Noto Sans JP', sans-serif;
+      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: #1a1a1a; color: #fff; }
+
+    /* ===== LOADING SCREEN ===== */
+    .loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; display: none; }
+    .loader-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      animation: loaderPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes loaderPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    /* ===== HAMBURGER MENU ===== */
+    .menu-toggle {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 1001;
+      width: 32px;
+      height: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      mix-blend-mode: difference;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: #fff;
+      transition: var(--transition);
+      transform-origin: center;
+    }
+    .menu-toggle.active span:nth-child(1) { transform: translateY(11.5px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-11.5px) rotate(-45deg); }
+
+    /* ===== FULLSCREEN NAV ===== */
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.97);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    .nav-overlay.active { opacity: 1; visibility: visible; }
+    .nav-list { list-style: none; text-align: center; }
+    .nav-list li { overflow: hidden; }
+    .nav-list a {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 300;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      padding: 0.3em 0;
+      transform: translateY(100%);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0.7;
+    }
+    .nav-list a:hover { opacity: 1; }
+    .nav-overlay.active .nav-list a {
+      transform: translateY(0);
+      transition-delay: calc(var(--i) * 0.08s + 0.2s);
+    }
+
+    /* ===== HEADER / HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 10vw, 8rem);
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.1;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s ease forwards 0.5s;
+    }
+    .hero-title {
+      font-size: clamp(0.7rem, 1.5vw, 1rem);
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-top: 1.5rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.8s;
+    }
+    .scroll-indicator {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1.2s;
+    }
+    .scroll-indicator span {
+      display: block;
+      width: 1px;
+      height: 60px;
+      background: var(--text-light);
+      margin: 0 auto;
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    .scroll-indicator p {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-top: 0.8rem;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ===== SECTION COMMON ===== */
+    section { padding: 6rem 2rem; }
+    .section-label {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .section-line {
+      width: 40px;
+      height: 1px;
+      background: var(--text);
+      margin: 0 auto 4rem;
+    }
+
+    /* ===== WORKS / MASONRY GRID ===== */
+    #works { padding-bottom: 4rem; }
+
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      cursor: pointer;
+      padding: 0.5rem 0;
+      position: relative;
+      transition: color var(--transition);
+    }
+    .filter-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--text);
+      transition: width var(--transition);
+    }
+    .filter-btn.active, .filter-btn:hover { color: var(--text); }
+    .filter-btn.active::after, .filter-btn:hover::after { width: 100%; }
+
+    .masonry {
+      columns: 3;
+      column-gap: 12px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ===== WORK GROUP CARD (1 per group) ===== */
+    .work-group {
+      break-inside: avoid;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .work-group.visible { opacity: 1; transform: translateY(0); }
+    .work-group.hidden { display: none; }
+    .work-group img {
+      width: 100%;
+      display: block;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .work-group:hover img { transform: scale(1.03); }
+
+    .work-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+      transition: background 0.4s ease;
+    }
+    .work-group:hover .work-overlay { background: rgba(0, 0, 0, 0.35); }
+    .work-overlay-text {
+      color: #fff;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
+      flex: 1;
+    }
+    .work-group:hover .work-overlay-text { opacity: 1; transform: translateY(0); }
+    .work-overlay-text h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+    }
+    .work-overlay-text p {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+      opacity: 0.8;
+    }
+
+    /* count badge */
+    .work-count {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .work-group:hover .work-count { opacity: 1; }
+    .work-count.single { display: none; }
+
+    /* ===== LIGHTBOX (GROUP GALLERY) ===== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.96);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    .lightbox.active { opacity: 1; visibility: visible; }
+
+    .lightbox-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+      padding: 2rem;
+    }
+    .lightbox-main img {
+      max-width: 85vw;
+      max-height: 75vh;
+      object-fit: contain;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      z-index: 2010;
+    }
+    .lightbox-close::before, .lightbox-close::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: #fff;
+    }
+    .lightbox-close::before { transform: rotate(45deg); }
+    .lightbox-close::after { transform: rotate(-45deg); }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2.2rem;
+      cursor: pointer;
+      padding: 1.5rem;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+      z-index: 2005;
+    }
+    .lightbox-nav:hover { opacity: 1; }
+    .lightbox-prev { left: 0.5rem; }
+    .lightbox-next { right: 0.5rem; }
+    .lightbox-nav.disabled { opacity: 0.15; pointer-events: none; }
+
+    /* info bar */
+    .lightbox-info {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 2010;
+    }
+    .lightbox-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: 0.1em;
+    }
+    .lightbox-counter {
+      font-size: 0.7rem;
+      color: #999;
+      letter-spacing: 0.15em;
+      margin-top: 0.3rem;
+    }
+
+    /* thumbnail strip */
+    .lightbox-thumbs {
+      display: flex;
+      gap: 8px;
+      padding: 1rem 2rem 1.5rem;
+      justify-content: center;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    .lightbox-thumbs::-webkit-scrollbar { height: 2px; }
+    .lightbox-thumbs::-webkit-scrollbar-thumb { background: #444; }
+    .lightbox-thumb {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      cursor: pointer;
+      opacity: 0.4;
+      transition: opacity 0.3s ease, outline-color 0.3s ease;
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+      flex-shrink: 0;
+    }
+    .lightbox-thumb:hover { opacity: 0.7; }
+    .lightbox-thumb.active { opacity: 1; outline-color: #fff; }
+    .lightbox-thumbs.single-image { display: none; }
+
+    /* ===== ABOUT ===== */
+    #about { background: #fff; }
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .about-content p {
+      font-size: 0.9rem;
+      line-height: 2.2;
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 300;
+    }
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-top: 0.5rem;
+    }
+
+    /* ===== CAREER ===== */
+    #career { background: #fff; }
+    .career-timeline { max-width: 700px; margin: 0 auto; }
+    .career-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .career-year {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--text-light);
+    }
+    .career-desc h3 { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; }
+    .career-desc p { font-size: 0.8rem; color: #666; line-height: 1.8; }
+
+    /* ===== CONTACT ===== */
+    #contact { background: #0a0a0a; color: #fff; }
+    #contact .section-label { color: #fff; }
+    #contact .section-line { background: #fff; }
+    .contact-content { max-width: 600px; margin: 0 auto; text-align: center; }
+    .contact-content > p { font-size: 0.85rem; color: #999; margin-bottom: 3rem; line-height: 1.9; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+    .form-group { position: relative; }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #333;
+      padding: 1rem 0;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: #fff; }
+    .form-group label {
+      position: absolute;
+      top: 1rem;
+      left: 0;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #666;
+      pointer-events: none;
+      transition: all var(--transition);
+    }
+    .form-group input:focus ~ label,
+    .form-group input:not(:placeholder-shown) ~ label,
+    .form-group textarea:focus ~ label,
+    .form-group textarea:not(:placeholder-shown) ~ label {
+      top: -0.8rem;
+      font-size: 0.6rem;
+      color: #999;
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .submit-btn {
+      align-self: center;
+      background: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 1rem 3rem;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition);
+      margin-top: 1rem;
+    }
+    .submit-btn:hover { background: #fff; color: #000; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #0a0a0a;
+      color: #666;
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid #1a1a1a;
+    }
+    .footer-social { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; }
+    .footer-social a {
+      color: #666;
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color var(--transition);
+    }
+    .footer-social a:hover { color: #fff; }
+    footer p { font-size: 0.65rem; letter-spacing: 0.2em; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .masonry { columns: 2; }
+    }
+    @media (max-width: 600px) {
+      .masonry { columns: 1; column-gap: 8px; }
+      .work-group { margin-bottom: 8px; }
+      section { padding: 4rem 1.5rem; }
+      .about-stats { grid-template-columns: 1fr; gap: 1.5rem; }
+      .career-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .menu-toggle { top: 1.2rem; right: 1.2rem; }
+      .filter-bar { gap: 0.8rem; }
+      .lightbox-thumb { width: 48px; height: 48px; }
+      .lightbox-nav { font-size: 1.5rem; padding: 1rem; }
+    }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- LOADING SCREEN -->
+  <div class="loader">
+    <div class="loader-text">KURISHITA</div>
+  </div>
+
+  <!-- HAMBURGER MENU -->
+  <button class="menu-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- FULLSCREEN NAVIGATION -->
+  <nav class="nav-overlay">
+    <ul class="nav-list">
+      <li><a href="#works" style="--i:0">Works</a></li>
+      <li><a href="#about" style="--i:1">About</a></li>
+      <li><a href="#career" style="--i:2">Career</a></li>
+      <li><a href="#contact" style="--i:3">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <h1 class="hero-name">Naoki<br>Kurishita</h1>
+    <p class="hero-title">Retoucher</p>
+    <div class="scroll-indicator">
+      <span></span>
+      <p>Scroll</p>
+    </div>
+  </header>
+
+  <!-- WORKS -->
+  <section id="works">
+    <h2 class="section-label reveal">Works</h2>
+    <div class="section-line reveal"></div>
+
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="advertising">Advertising</button>
+      <button class="filter-btn" data-filter="fashion">Fashion</button>
+      <button class="filter-btn" data-filter="corporate">Corporate</button>
+    </div>
+
+    <div class="masonry" id="gallery">
+      <!--
+        ===== 作品の追加方法 =====
+        各 work-group は1つのプロジェクトを表します。
+        data-images にカンマ区切りで画像URLを列挙してください。
+        先頭の画像がサヮネイルとしてグリッドに表示され、
+        クリックすると全画像をライトボックスで閲覧できます。
+
+        ファイル名の先頭5文字が同じ画像は同じグループにまとめています。
+
+        <div class="work-group"
+             data-category="advertising"
+             data-title="クライアント名"
+             data-images="URL1,URL2,URL3">
+          <img src="URL1" alt="クライアント名" loading="lazy">
+          <div class="work-overlay">
+            <div class="work-overlay-text">
+              <h3>クライアント名</h3>
+              <p>カテゴリー</p>
+            </div>
+          </div>
+          <div class="work-count">3</div>
+        </div>
+      -->
+
+      <!-- ECC (ecc_01, ecc_02, ecc_03) -->
+      <div class="work-group"
+           data-category="advertising"
+           data-title="ECC"
+           data-images="https://drive.google.com/thumbnail?id=1Bu8SvVW6a1oMZt0j4c431dc088b3v_C_&sz=w2000,https://drive.google.com/thumbnail?id=1mfjBj8sJOca-tZ8u8W7sPHOBjVg6vTYv&sz=w2000,https://drive.google.com/thumbnail?id=1jGxV1BF41X8MHx7nwTHG6wrwhazNXiey&sz=w2000">
+        <img src="https://drive.google.com/thumbnail?id=1Bu8SvVW6a1oMZt0j4c431dc088b3v_C_&sz=w1200" alt="ECC" loading="lazy">
+        <div class="work-overlay">
+          <div class="work-overlay-text">
+            <h3>ECC</h3>
+            <p>Advertising</p>
+          </div>
+        </div>
+        <div class="work-count">3</div>
+      </div>
+
+      <!-- ORIHICA (orihica_KV_1, 2, 3) -->
+      <div class="work-group"
+           data-category="fashion"
+           data-title="ORIHICA"
+           data-images="https://drive.google.com/thumbnail?id=1dyhliUqfV-0lCIfAidBi6F0YMYNTmvU1&sz=w2000,https://drive.google.com/thumbnail?id=1cr4H-1MKvmUhS_gltBYoTYK7zvEo2MOF&sz=w2000,https://drive.google.com/thumbnail?id=1KgbR3Nsi6UMNlQBhpw2SaIUIHpj1MGi_&sz=w2000">
+        <img src="https://drive.google.com/thumbnail?id=1dyhliUqfV-0lCIfAidBi6F0YMYNTmvU1&sz=w1200" alt="ORIHICA" loading="lazy">
+        <div class="work-overlay">
+          <div class="work-overlay-text">
+            <h3>ORIHICA</h3>
+            <p>Fashion</p>
+          </div>
+        </div>
+        <div class="work-count">3</div>
+      </div>
+
+      <!-- Tokyu (Tokyu_GR_B1poster_KV, Tokyu_GR_B1poster_Security) -->
+      <div class="work-group"
+           data-category="corporate"
+           data-title="Tokyu Corporation"
+           data-images="https://drive.google.com/thumbnail?id=1J7-uu1K9JoidhjbSkMB_oBOpF3m33bOE&sz=w2000,https://drive.google.com/thumbnail?id=17ieJ-5PNm0bzCQY2ntRZ5eolBSrT7x9n&sz=w2000">
+        <img src="https://drive.google.com/thumbnail?id=1J7-uu1K9JoidhjbSkMB_oBOpF3m33bOE&sz=w1200" alt="Tokyu Corporation" loading="lazy">
+        <div class="work-overlay">
+          <div class="work-overlay-text">
+            <h3>Tokyu Corporation</h3>
+            <p>Corporate</p>
+          </div>
+        </div>
+        <div class="work-count">2</div>
+      </div>
+
+      <!-- Captain Ambulance (民間敁急 x4: -1, -2, -8, -9) -->
+      <div class="work-group"
+           data-category="corporate"
+           data-title="Captain Ambulance"
+           data-images="https://drive.google.com/thumbnail?id=1QXayVhpTIddHzrMOPb2LPNrkABy6S-1K&sz=w2000,https://drive.google.com/thumbnail?id=1n5EOP_p-nqHrqGe8fXwFsT31cAeLyvhy&sz=w2000,https://drive.google.com/thumbnail?id=1PKACXXJAnKkGf9RYSjsrZkpWN5Ddj6kt&sz=w2000,https://drive.google.com/thumbnail?id=1H0CyoPBCaHLzT4JOZo8kjpiIoDPBeaFB&sz=w2000">
+        <img src="https://drive.google.com/thumbnail?id=1QXayVhpTIddHzrMOPb2LPNrkABy6S-1K&sz=w1200" alt="Captain Ambulance" loading="lazy">
+        <div class="work-overlay">
+          <div class="work-overlay-text">
+            <h3>Captain Ambulance</h3>
+            <p>Corporate</p>
+          </div>
+        </div>
+        <div class="work-count">4</div>
+      </div>
+
+      <!-- NutS (Nuts_poster_01) -->
+      <div class="work-group"
+           data-category="advertising"
+           data-title="NutS"
+           data-images="https://drive.google.com/thumbnail?id=1jxVUiGBFJ1vvuHN5KrZHNLiqiekvrJ8e&sz=w2000">
+        <img src="htu���輽�ɥٔ������������ѡյ���������ũ�YU�	(����!8�-�i!91�ť����(ᔙ��������������9��L���������􉱅���(���������؁������ݽɬ��ٕɱ���(�����������؁������ݽɬ��ٕɱ��ѕ�Ј�(���������������9��L���(����������������ٕ�ѥͥ�����(����������𽑥��(��������𽑥��(���������؁������ݽɬ���չЁͥ�������𽑥��(������𽑥��(����𽑥��(���͕�ѥ���((�������	=UP����(���͕�ѥ�����􉅉��Ј�(�����ȁ������͕�ѥ���������ɕٕ�����������(�����؁������͕�ѥ��������ɕٕ����𽑥��(�����؁�����􉅉��е���ѕ�Ёɕٕ����(���������(����������_��,��nӚ�䃊T��W������ώ
+䃎��
+����������(�����������F+��W�
+���
+ߎ��ώ�
+ώ�w����#����������
+���ώ�������(���������J���Ǟ҃�vC���w��ώ
+ߎ����
+K�r����fC����W�7��g���
+�������
+��
+K�>C��o�_������g�(���������(���������(���������
+����
+��
+��ώ#���O�
+���ώ
+K��ǎ?�B����_���æ��������O���
+?���|���(���������?�
+��
+��ώ'���O�
+���
+�������>��
+K������_���g�(���������(�������؁�����􉅉��е�х�̈�(�����������(�����������؁�������хе�յ��Ȉ����𽑥��(�����������؁�������хе�������e���́���ɥ����𽑥��(��������𽑥��(�����������(�����������؁�������хе�յ��Ȉ�����𽑥��(�����������؁�������хе�������Aɽ�����𽑥��(��������𽑥��(�����������(�����������؁�������хе�յ��Ȉ����𽑥��(�����������؁�������хе�������
+������𽑥��(��������𽑥��(������𽑥��(����𽑥��(���͕�ѥ���((�������
+IH����(���͕�ѥ�����􉍅ɕ�Ȉ�(�����ȁ������͕�ѥ���������ɕٕ����
+�ɕ�����(�����؁������͕�ѥ��������ɕٕ����𽑥��(�����؁�����􉍅ɕ�ȵѥ��������(�������؁�����􉍅ɕ�ȵ�ѕ��ɕٕ����(���������؁�����􉍅ɕ�ȵ啅Ȉ��>��r�𽑥��(���������؁�����􉍅ɕ�ȵ��͌��(��������������W������ώ
+䃎��
+����������(����������������F+��W�
+���
+ߎ��ώ�
+ώ�w����#����������
+���ώ������
+����
+K�&/�3�G�
+/����(��������𽑥��(������𽑥��(�������؁�����􉍅ɕ�ȵ�ѕ��ɕٕ����(���������؁�����􉍅ɕ�ȵ啅Ȉ���実績</div>
+        <div class="career-desc">
+          <h3>広告 / コーポレート</h3>
+          <p>ECC、ORIHICA、東急グループ、民間救急キャプテン、NutS ほか多数</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2 class="section-label reveal">Contact</h2>
+    <div class="section-line reveal"></div>
+    <div class="contact-content reveal">
+      <p>お仕事のご依頼・ご相請はお気軽にお問い合わせください。</p>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <input type="text" name="name" placeholder=" " required>
+          <label>お名前</label>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder=" " required>
+          <label>メールアドレス</label>
+        </div>
+        <div class="form-group">
+          <input type="text" name="company" placeholder=" ">
+          <label>会社名</label>
+        </div>
+        <div class="form-group">
+          <textarea name="message" placeholder=" " required></textarea>
+          <label>お問い合わせ内容</label>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-social">
+      <a href="#" target="_blank">Instagram</a>
+      <a href="#" target="_blank">Behance</a>
+      <a href="mailto:nao.kurishita@gmail.com">Email</a>
+    </div>
+    <p>&copy; 2026 Naoki Kurishita. All rights reserved.</p>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" aria-label="Close"></button>
+    <div class="lightbox-info">
+      <div class="lightbox-title"></div>
+      <div class="lightbox-counter"></div>
+    </div>
+    <div class="lightbox-main">
+      <button class="lightbox-nav lightbox-prev" aria-label="Previous">&larr;</button>
+      <img src="" alt="">
+      <button class="lightbox-nav lightbox-next" aria-label="Next">&rarr;</button>
+    </div>
+    <div class="lightbox-thumbs"></div>
+  </div>
+
+  <script>
+    // ===== LOADER =====
+    function hideLoader() {
+      const loader = document.querySelector('.loader');
+      if (loader) {
+        loader.classList.add('hidden');
+        loader.style.display = 'none';
+      }
+    }
+    // DOMContentLoaded + フォールバック
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => setTimeout(hideLoader, 800));
+    } else {
+      setTimeout(hideLoader, 800);
+    }
+    setTimeout(hideLoader, 3000);
+
+    // ===== HAMBURGER MENU =====
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navOverlay = document.querySelector('.nav-overlay');
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navOverlay.classList.toggle('active');
+      document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.nav-list a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ===== FILTER =====
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const workGroups = document.querySelectorAll('.work-group');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        workGroups.forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // ===== GROUP LIGHTBOX =====
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('.lightbox-main img');
+    const lightboxTitle = lightbox.querySelector('.lightbox-title');
+    const lightboxCounter = lightbox.querySelector('.lightbox-counter');
+    const lightboxThumbs = lightbox.querySelector('.lightbox-thumbs');
+    const prevBtn = lightbox.querySelector('.lightbox-prev');
+    const nextBtn = lightbox.querySelector('.lightbox-next');
+
+    let currentGroupImages = [];
+    let currentImageIndex = 0;
+
+    function openLightbox(group) {
+      const title = group.dataset.title;
+      const images = group.dataset.images.split(',');
+      currentGroupImages = images;
+      currentImageIndex = 0;
+
+      lightboxTitle.textContent = title;
+      updateLightboxImage();
+      buildThumbnails(images);
+
+      if (images.length <= 1) {
+        lightboxThumbs.classList.add('single-image');
+      } else {
+        lightboxThumbs.classList.remove('single-image');
+      }
+
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateLightboxImage() {
+      lightboxImg.style.opacity = '0';
+      setTimeout(() => {
+        lightboxImg.src = currentGroupImages[currentImageIndex];
+        lightboxImg.style.opacity = '1';
+      }, 150);
+
+      const total = currentGroupImages.length;
+      lightboxCounter.textContent = total > 1 ? `${currentImageIndex + 1} / ${total}` : '';
+
+      // update nav buttons
+      prevBtn.classList.toggle('disabled', currentImageIndex === 0);
+      nextBtn.classList.toggle('disabled', currentImageIndex === total - 1);
+
+      // update thumb active state
+      lightboxThumbs.querySelectorAll('.lightbox-thumb').forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === currentImageIndex);
+      });
+    }
+
+    function buildThumbnails(images) {
+      lightboxThumbs.innerHTML = '';
+      images.forEach((src, i) => {
+        const thumb = document.createElement('img');
+        thumb.className = 'lightbox-thumb' + (i === 0 ? ' active' : '');
+        thumb.src = src.replace('w2000', 'w200');
+        thumb.alt = '';
+        thumb.addEventListener('click', (e) => {
+          e.stopPropagation();
+          currentImageIndex = i;
+          updateLightboxImage();
+        });
+        lightboxThumbs.appendChild(thumb);
+      });
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // attach click to each group card
+    workGroups.forEach(group => {
+      group.addEventListener('click', () => openLightbox(group));
+    });
+
+    lightbox.querySelector('.lightbox-close').addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeLightbox();
+    });
+
+    lightbox.querySelector('.lightbox-main').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeLightbox();
+    });
+
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentImageIndex > 0) {
+        currentImageIndex--;
+        updateLightboxImage();
+      }
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentImageIndex < currentGroupImages.length - 1) {
+        currentImageIndex++;
+        updateLightboxImage();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft' && currentImageIndex > 0) {
+        currentImageIndex--;
+        updateLightboxImage();
+      }
+      if (e.key === 'ArrowRight' && currentImageIndex < currentGroupImages.length - 1) {
+        currentImageIndex++;
+        updateLightboxImage();
+      }
+    });
+
+    // ===== SCROLL REVEAL =====
+    function revealCheck() {
+      document.querySelectorAll('.reveal:not(.active), .work-group:not(.visible)').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.9) {
+          el.classList.add(el.classList.contains('work-group') ? 'visible' : 'active');
+        }
+      });
+    }
+    try {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(entry.target.classList.contains('work-group') ? 'visible' : 'active');
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal, .work-group').forEach(el => observer.observe(el));
+    } catch(e) {}
+    // フォールバック: scroll + 初期チェック
+    window.addEventListener('scroll', revealCheck, { passive: true });
+    revealCheck();
+
+    // ===== FORM =====
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const name = form.name.value;
+      const email = form.email.value;
+      const company = form.company.value;
+      const message = form.message.value;
+      const subject = encodeURIComponent('お問い合わせ: ' + name + (company ? ' / ' + company : ''));
+      const body = encodeURIComponent('名前: ' + name + '\nメール: ' + email + '\n会社: ' + company + '\n\n' + message);
+      window.location.href = 'mailto:nao.kurishita@gmail.com?subject=' + subject + '&body=' + body;
+    }
+  </script>
+</body>
+</html>
