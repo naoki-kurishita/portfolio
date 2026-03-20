@@ -75,8 +75,10 @@
     .work-overlay-text h3 { font-family: var(--font-display); font-size: 1.3rem; color: #fff; font-weight: 400; letter-spacing: 0.05em; }
     .work-overlay-text p { font-size: 0.7rem; color: rgba(255,255,255,0.7); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.3rem; }
 
-    .work-count { position: absolute; top: 1rem; right: 1rem; background: rgba(0,0,0,0.6); color: #fff; font-size: 0.7rem; padding: 0.3rem 0.7rem; border-radius: 2px; letter-spacing: 0.1em; backdrop-filter: blur(4px); }
-    .work-count.single { display: none; }
+    .work-more { position: absolute; right: 0; top: 0; bottom: 0; width: 2.5rem; display: flex; align-items: center; justify-content: center; background: linear-gradient(to right, transparent, rgba(0,0,0,0.25)); opacity: 0.6; transition: opacity 0.4s ease; pointer-events: none; }
+    .work-group:hover .work-more { opacity: 1; }
+    .work-more svg { width: 18px; height: 18px; stroke: #fff; stroke-width: 2; fill: none; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4)); }
+    .work-more.single { display: none; }
 
     .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
     .lightbox.active { opacity: 1; visibility: visible; }
@@ -237,7 +239,7 @@
         d.dataset.title=g[0];
         d.dataset.images=g[1].map(function(id){return T(id)+'w1600'}).join(',');
         var cnt=g[1].length;
-        d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-count'+(cnt===1?' single':'')+'">'+cnt+'</div>';
+        d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
         colEls[i%cols].appendChild(d);
       });
       // re-bind click events
