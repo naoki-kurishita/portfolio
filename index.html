@@ -8,611 +8,138 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@200;300;400;500&family=Noto+Sans+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
   <style>
-    /* ===== RESET & BASE ===== */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
-      --bg: #f5f5f5;
-      --bg-dark: #0a0a0a;
-      --text: #1a1a1a;
-      --text-light: #888;
-      --accent: #999;
-      --border: #ddd;
+      --bg: #f5f5f5; --bg-dark: #0a0a0a; --text: #1a1a1a; --text-light: #888;
+      --accent: #999; --border: #ddd;
       --font-display: 'Cormorant Garamond', serif;
       --font-body: 'Inter', 'Noto Sans JP', sans-serif;
       --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      font-weight: 300;
-      line-height: 1.7;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); font-weight: 300; line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
     ::selection { background: #1a1a1a; color: #fff; }
 
-    /* ===== LOADING SCREEN ===== */
-    .loader {
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
-    }
+    .loader { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.8s ease, visibility 0.8s ease; }
     .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; display: none; }
-    .loader-text {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 4vw, 3rem);
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      animation: loaderPulse 1.5s ease-in-out infinite;
-    }
+    .loader-text { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 300; letter-spacing: 0.3em; animation: loaderPulse 1.5s ease-in-out infinite; }
     @keyframes loaderPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-    /* ===== HAMBURGER MENU ===== */
-    .menu-toggle {
-      position: fixed;
-      top: 2rem;
-      right: 2rem;
-      z-index: 1001;
-      width: 32px;
-      height: 24px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      mix-blend-mode: difference;
-    }
-    .menu-toggle span {
-      display: block;
-      width: 100%;
-      height: 1px;
-      background: #fff;
-      transition: var(--transition);
-      transform-origin: center;
-    }
+    .menu-toggle { position: fixed; top: 2rem; right: 2rem; z-index: 1001; width: 32px; height: 24px; cursor: pointer; background: none; border: none; display: flex; flex-direction: column; justify-content: space-between; mix-blend-mode: difference; }
+    .menu-toggle span { display: block; width: 100%; height: 1px; background: #fff; transition: var(--transition); transform-origin: center; }
     .menu-toggle.active span:nth-child(1) { transform: translateY(11.5px) rotate(45deg); }
     .menu-toggle.active span:nth-child(2) { opacity: 0; }
     .menu-toggle.active span:nth-child(3) { transform: translateY(-11.5px) rotate(-45deg); }
 
-    /* ===== FULLSCREEN NAV ===== */
-    .nav-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10, 10, 10, 0.97);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: var(--transition);
-    }
+    .nav-overlay { position: fixed; inset: 0; background: rgba(10, 10, 10, 0.97); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: var(--transition); }
     .nav-overlay.active { opacity: 1; visibility: visible; }
     .nav-list { list-style: none; text-align: center; }
     .nav-list li { overflow: hidden; }
-    .nav-list a {
-      display: inline-block;
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 300;
-      color: #fff;
-      text-decoration: none;
-      letter-spacing: 0.15em;
-      padding: 0.3em 0;
-      transform: translateY(100%);
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-      opacity: 0.7;
-    }
-    .nav-list a:hover { opacity: 1; }
-    .nav-overlay.active .nav-list a {
-      transform: translateY(0);
-      transition-delay: calc(var(--i) * 0.08s + 0.2s);
-    }
+    .nav-list a { display: inline-block; font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); color: #fff; text-decoration: none; padding: 0.3em 0; font-weight: 300; letter-spacing: 0.1em; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); transition-delay: calc(var(--i) * 0.08s); }
+    .nav-overlay.active .nav-list a { transform: translateY(0); }
+    .nav-list a:hover { color: var(--accent); }
 
-    /* ===== HEADER / HERO ===== */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      position: relative;
-    }
-    .hero-name {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 10vw, 8rem);
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-align: center;
-      line-height: 1.1;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 1s ease forwards 0.5s;
-    }
-    .hero-title {
-      font-size: clamp(0.7rem, 1.5vw, 1rem);
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: var(--text-light);
-      margin-top: 1.5rem;
-      font-weight: 300;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.8s;
-    }
-    .scroll-indicator {
-      position: absolute;
-      bottom: 3rem;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 1.2s;
-    }
-    .scroll-indicator span {
-      display: block;
-      width: 1px;
-      height: 60px;
-      background: var(--text-light);
-      margin: 0 auto;
-      animation: scrollLine 2s ease-in-out infinite;
-    }
-    .scroll-indicator p {
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--text-light);
-      margin-top: 0.8rem;
-    }
+    .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; background: var(--bg); }
+    .hero-name { font-family: var(--font-display); font-size: clamp(3rem, 10vw, 10rem); font-weight: 300; letter-spacing: 0.15em; line-height: 1; color: var(--text); }
+    .hero-title { font-size: clamp(0.7rem, 1.5vw, 1rem); letter-spacing: 0.5em; text-transform: uppercase; color: var(--text-light); margin-top: 1.5rem; font-weight: 300; }
+    .scroll-indicator { position: absolute; bottom: 3rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
+    .scroll-indicator span { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--text), transparent); animation: scrollDown 2s ease-in-out infinite; }
+    @keyframes scrollDown { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+    .scroll-indicator p { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-light); }
 
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes scrollLine {
-      0% { transform: scaleY(0); transform-origin: top; }
-      50% { transform: scaleY(1); transform-origin: top; }
-      51% { transform: scaleY(1); transform-origin: bottom; }
-      100% { transform: scaleY(0); transform-origin: bottom; }
-    }
+    section { padding: 8rem 5vw; max-width: 1400px; margin: 0 auto; }
+    .section-label { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300; letter-spacing: 0.15em; margin-bottom: 1rem; }
+    .section-line { width: 60px; height: 1px; background: var(--text); margin-bottom: 4rem; }
 
-    /* ===== SECTION COMMON ===== */
-    section { padding: 6rem 2rem; }
-    .section-label {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    .section-line {
-      width: 40px;
-      height: 1px;
-      background: var(--text);
-      margin: 0 auto 4rem;
-    }
+    .filter-bar { display: flex; gap: 1.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+    .filter-btn { background: none; border: 1px solid var(--border); padding: 0.5rem 1.5rem; font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.15em; cursor: pointer; transition: var(--transition); color: var(--text-light); }
+    .filter-btn.active, .filter-btn:hover { background: var(--text); color: #fff; border-color: var(--text); }
 
-    /* ===== WORKS / MASONRY GRID ===== */
-    #works { padding-bottom: 4rem; }
+    .masonry { columns: 3; column-gap: 1.5rem; }
+    @media (max-width: 1024px) { .masonry { columns: 2; } }
+    @media (max-width: 600px) { .masonry { columns: 1; } }
 
-    .filter-bar {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-      flex-wrap: wrap;
-    }
-    .filter-btn {
-      background: none;
-      border: none;
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-light);
-      cursor: pointer;
-      padding: 0.5rem 0;
-      position: relative;
-      transition: color var(--transition);
-    }
-    .filter-btn::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: var(--text);
-      transition: width var(--transition);
-    }
-    .filter-btn.active, .filter-btn:hover { color: var(--text); }
-    .filter-btn.active::after, .filter-btn:hover::after { width: 100%; }
-
-    .masonry {
-      columns: 3;
-      column-gap: 12px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    /* ===== WORK GROUP CARD (1 per group) ===== */
-    .work-group {
-      break-inside: avoid;
-      margin-bottom: 12px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
+    .work-group { break-inside: avoid; margin-bottom: 1.5rem; position: relative; overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .work-group.visible { opacity: 1; transform: translateY(0); }
     .work-group.hidden { display: none; }
-    .work-group img {
-      width: 100%;
-      display: block;
-      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
+    .work-group img { width: 100%; display: block; transition: transform 0.6s ease; }
     .work-group:hover img { transform: scale(1.03); }
 
-    .work-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0);
-      display: flex;
-      align-items: flex-end;
-      padding: 1.5rem;
-      transition: background 0.4s ease;
-    }
-    .work-group:hover .work-overlay { background: rgba(0, 0, 0, 0.35); }
-    .work-overlay-text {
-      color: #fff;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.4s ease;
-      flex: 1;
-    }
-    .work-group:hover .work-overlay-text { opacity: 1; transform: translateY(0); }
-    .work-overlay-text h3 {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-    }
-    .work-overlay-text p {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-top: 0.3rem;
-      opacity: 0.8;
-    }
+    .work-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: flex-end; padding: 1.5rem; opacity: 0; transition: opacity 0.4s ease; }
+    .work-group:hover .work-overlay { opacity: 1; }
+    .work-overlay-text h3 { font-family: var(--font-display); font-size: 1.3rem; color: #fff; font-weight: 400; letter-spacing: 0.05em; }
+    .work-overlay-text p { font-size: 0.7rem; color: rgba(255,255,255,0.7); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.3rem; }
 
-    /* count badge */
-    .work-count {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: rgba(0, 0, 0, 0.6);
-      color: #fff;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 400;
-      letter-spacing: 0;
-      backdrop-filter: blur(4px);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-    .work-group:hover .work-count { opacity: 1; }
+    .work-count { position: absolute; top: 1rem; right: 1rem; background: rgba(0,0,0,0.6); color: #fff; font-size: 0.7rem; padding: 0.3rem 0.7rem; border-radius: 2px; letter-spacing: 0.1em; backdrop-filter: blur(4px); }
     .work-count.single { display: none; }
 
-    /* ===== LIGHTBOX (GROUP GALLERY) ===== */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.96);
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: var(--transition);
-    }
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
     .lightbox.active { opacity: 1; visibility: visible; }
-
-    .lightbox-main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      position: relative;
-      padding: 2rem;
-    }
-    .lightbox-main img {
-      max-width: 85vw;
-      max-height: 75vh;
-      object-fit: contain;
-      transition: opacity 0.3s ease;
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      width: 36px;
-      height: 36px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      z-index: 2010;
-    }
-    .lightbox-close::before, .lightbox-close::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      background: #fff;
-    }
-    .lightbox-close::before { transform: rotate(45deg); }
-    .lightbox-close::after { transform: rotate(-45deg); }
-
-    .lightbox-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 2.2rem;
-      cursor: pointer;
-      padding: 1.5rem;
-      opacity: 0.5;
-      transition: opacity 0.3s;
-      z-index: 2005;
-    }
+    .lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; width: 40px; height: 40px; background: none; border: none; cursor: pointer; z-index: 2001; }
+    .lightbox-close::before, .lightbox-close::after { content: ''; position: absolute; top: 50%; left: 50%; width: 24px; height: 1px; background: #fff; }
+    .lightbox-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+    .lightbox-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+    .lightbox-info { padding: 1.5rem 2rem 0; display: flex; justify-content: space-between; align-items: center; }
+    .lightbox-title { font-family: var(--font-display); font-size: 1.3rem; color: #fff; font-weight: 300; letter-spacing: 0.1em; }
+    .lightbox-counter { font-size: 0.75rem; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; }
+    .lightbox-main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 1rem; position: relative; min-height: 0; }
+    .lightbox-main img { max-width: 90%; max-height: 70vh; object-fit: contain; transition: opacity 0.3s ease; }
+    .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; padding: 1rem; opacity: 0.5; transition: opacity 0.3s; }
     .lightbox-nav:hover { opacity: 1; }
-    .lightbox-prev { left: 0.5rem; }
-    .lightbox-next { right: 0.5rem; }
-    .lightbox-nav.disabled { opacity: 0.15; pointer-events: none; }
-
-    /* info bar */
-    .lightbox-info {
-      position: absolute;
-      top: 1.5rem;
-      left: 1.5rem;
-      z-index: 2010;
-    }
-    .lightbox-title {
-      font-family: var(--font-display);
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: #fff;
-      letter-spacing: 0.1em;
-    }
-    .lightbox-counter {
-      font-size: 0.7rem;
-      color: #999;
-      letter-spacing: 0.15em;
-      margin-top: 0.3rem;
-    }
-
-    /* thumbnail strip */
-    .lightbox-thumbs {
-      display: flex;
-      gap: 8px;
-      padding: 1rem 2rem 1.5rem;
-      justify-content: center;
-      overflow-x: auto;
-      max-width: 100%;
-    }
-    .lightbox-thumbs::-webkit-scrollbar { height: 2px; }
-    .lightbox-thumbs::-webkit-scrollbar-thumb { background: #444; }
-    .lightbox-thumb {
-      width: 64px;
-      height: 64px;
-      object-fit: cover;
-      cursor: pointer;
-      opacity: 0.4;
-      transition: opacity 0.3s ease, outline-color 0.3s ease;
-      outline: 2px solid transparent;
-      outline-offset: 2px;
-      flex-shrink: 0;
-    }
-    .lightbox-thumb:hover { opacity: 0.7; }
-    .lightbox-thumb.active { opacity: 1; outline-color: #fff; }
+    .lightbox-nav.disabled { opacity: 0.15; cursor: default; }
+    .lightbox-prev { left: 1rem; }
+    .lightbox-next { right: 1rem; }
+    .lightbox-thumbs { display: flex; gap: 0.5rem; padding: 1rem 2rem 1.5rem; overflow-x: auto; justify-content: center; }
     .lightbox-thumbs.single-image { display: none; }
+    .lightbox-thumb { width: 60px; height: 60px; object-fit: cover; cursor: pointer; opacity: 0.4; transition: opacity 0.3s; border: 2px solid transparent; }
+    .lightbox-thumb.active { opacity: 1; border-color: #fff; }
 
-    /* ===== ABOUT ===== */
-    #about { background: #fff; }
-    .about-content {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .about-content p {
-      font-size: 0.9rem;
-      line-height: 2.2;
-      color: #555;
-      margin-bottom: 1.5rem;
-    }
-    .about-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-top: 3rem;
-      padding-top: 3rem;
-      border-top: 1px solid var(--border);
-    }
-    .stat-number {
-      font-family: var(--font-display);
-      font-size: 2.5rem;
-      font-weight: 300;
-    }
-    .stat-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-light);
-      margin-top: 0.5rem;
-    }
+    .about-content { max-width: 700px; }
+    .about-content p { margin-bottom: 1.5rem; color: var(--text); font-size: 0.95rem; }
+    .about-stats { display: flex; gap: 4rem; margin-top: 3rem; }
+    .stat-number { font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; }
+    .stat-label { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--text-light); text-transform: uppercase; margin-top: 0.3rem; }
 
-    /* ===== CAREER ===== */
-    #career { background: #fff; }
-    .career-timeline { max-width: 700px; margin: 0 auto; }
-    .career-item {
-      display: grid;
-      grid-template-columns: 120px 1fr;
-      gap: 2rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .career-year {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      color: var(--text-light);
-    }
-    .career-desc h3 { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; }
-    .career-desc p { font-size: 0.8rem; color: #666; line-height: 1.8; }
+    .career-timeline { max-width: 700px; }
+    .career-item { display: flex; gap: 3rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
+    .career-year { font-family: var(--font-display); font-size: 1.2rem; min-width: 80px; color: var(--text-light); font-weight: 400; }
+    .career-desc h3 { font-size: 1rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .career-desc p { font-size: 0.85rem; color: var(--text-light); }
 
-    /* ===== CONTACT ===== */
-    #contact { background: #0a0a0a; color: #fff; }
-    #contact .section-label { color: #fff; }
-    #contact .section-line { background: #fff; }
-    .contact-content { max-width: 600px; margin: 0 auto; text-align: center; }
-    .contact-content > p { font-size: 0.85rem; color: #999; margin-bottom: 3rem; line-height: 1.9; }
-    .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-content { max-width: 600px; }
+    .contact-content > p { margin-bottom: 3rem; color: var(--text-light); }
+    .contact-form { display: flex; flex-direction: column; gap: 2rem; }
     .form-group { position: relative; }
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid #333;
-      padding: 1rem 0;
-      color: #fff;
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      font-weight: 300;
-      outline: none;
-      transition: border-color var(--transition);
-    }
-    .form-group input:focus,
-    .form-group textarea:focus { border-color: #fff; }
-    .form-group label {
-      position: absolute;
-      top: 1rem;
-      left: 0;
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: #666;
-      pointer-events: none;
-      transition: all var(--transition);
-    }
-    .form-group input:focus ~ label,
-    .form-group input:not(:placeholder-shown) ~ label,
-    .form-group textarea:focus ~ label,
-    .form-group textarea:not(:placeholder-shown) ~ label {
-      top: -0.8rem;
-      font-size: 0.6rem;
-      color: #999;
-    }
-    .form-group textarea { resize: vertical; min-height: 120px; }
-    .submit-btn {
-      align-self: center;
-      background: transparent;
-      border: 1px solid #fff;
-      color: #fff;
-      padding: 1rem 3rem;
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all var(--transition);
-      margin-top: 1rem;
-    }
-    .submit-btn:hover { background: #fff; color: #000; }
+    .form-group input, .form-group textarea { width: 100%; padding: 1rem 0; border: none; border-bottom: 1px solid var(--border); background: transparent; font-family: var(--font-body); font-size: 0.9rem; font-weight: 300; color: var(--text); outline: none; transition: border-color 0.3s; }
+    .form-group textarea { min-height: 120px; resize: vertical; }
+    .form-group label { position: absolute; left: 0; top: 1rem; font-size: 0.85rem; color: var(--text-light); pointer-events: none; transition: all 0.3s; }
+    .form-group input:focus ~ label, .form-group input:not(:placeholder-shown) ~ label,
+    .form-group textarea:focus ~ label, .form-group textarea:not(:placeholder-shown) ~ label { top: -0.8rem; font-size: 0.7rem; letter-spacing: 0.1em; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--text); }
+    .submit-btn { align-self: flex-start; padding: 1rem 3rem; border: 1px solid var(--text); background: transparent; font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.2em; cursor: pointer; transition: var(--transition); color: var(--text); }
+    .submit-btn:hover { background: var(--text); color: #fff; }
 
-    /* ===== FOOTER ===== */
-    footer {
-      background: #0a0a0a;
-      color: #666;
-      text-align: center;
-      padding: 3rem 2rem;
-      border-top: 1px solid #1a1a1a;
-    }
-    .footer-social { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; }
-    .footer-social a {
-      color: #666;
-      text-decoration: none;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      transition: color var(--transition);
-    }
-    .footer-social a:hover { color: #fff; }
-    footer p { font-size: 0.65rem; letter-spacing: 0.2em; }
+    footer { text-align: center; padding: 4rem 5vw; border-top: 1px solid var(--border); }
+    .footer-social { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; }
+    .footer-social a { font-size: 0.8rem; color: var(--text-light); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
+    .footer-social a:hover { color: var(--text); }
+    footer p { font-size: 0.7rem; color: var(--text-light); letter-spacing: 0.1em; }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 1024px) {
-      .masonry { columns: 2; }
-    }
-    @media (max-width: 600px) {
-      .masonry { columns: 1; column-gap: 8px; }
-      .work-group { margin-bottom: 8px; }
-      section { padding: 4rem 1.5rem; }
-      .about-stats { grid-template-columns: 1fr; gap: 1.5rem; }
-      .career-item { grid-template-columns: 1fr; gap: 0.5rem; }
-      .menu-toggle { top: 1.2rem; right: 1.2rem; }
-      .filter-bar { gap: 0.8rem; }
-      .lightbox-thumb { width: 48px; height: 48px; }
-      .lightbox-nav { font-size: 1.5rem; padding: 1rem; }
+    @media (max-width: 768px) {
+      section { padding: 5rem 6vw; }
+      .about-stats { gap: 2rem; }
+      .career-item { flex-direction: column; gap: 0.5rem; }
+      .lightbox-main img { max-width: 95%; max-height: 60vh; }
+      .lightbox-thumbs { padding: 0.5rem 1rem 1rem; }
     }
 
-    /* ===== SCROLL ANIMATIONS ===== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
     .reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
-
-  <!-- LOADING SCREEN -->
-  <div class="loader">
-    <div class="loader-text">KURISHITA</div>
-  </div>
-
-  <!-- HAMBURGER MENU -->
-  <button class="menu-toggle" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-
-  <!-- FULLSCREEN NAVIGATION -->
+  <div class="loader"><div class="loader-text">KURISHITA</div></div>
+  <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   <nav class="nav-overlay">
     <ul class="nav-list">
       <li><a href="#works" style="--i:0">Works</a></li>
@@ -621,190 +148,55 @@
       <li><a href="#contact" style="--i:3">Contact</a></li>
     </ul>
   </nav>
-
-  <!-- HERO -->
   <header class="hero" id="top">
     <h1 class="hero-name">Kurishita</h1>
     <p class="hero-title">Retoucher</p>
-    <div class="scroll-indicator">
-      <span></span>
-      <p>Scroll</p>
-    </div>
+    <div class="scroll-indicator"><span></span><p>Scroll</p></div>
   </header>
-
-  <!-- WORKS -->
   <section id="works">
     <h2 class="section-label reveal">Works</h2>
     <div class="section-line reveal"></div>
-
     <div class="filter-bar reveal">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="advertising">Advertising</button>
-
     </div>
-
-    <div class="masonry" id="gallery">
-      <!--
-        ===== 作品の追加方法 =====
-        各 work-group は1つのプロジェクトを表します。
-        data-images にカンマ区切りで画像URLを列挙してください。
-        先頭の画像がサヮネイルとしてグリッドに表示され、
-        クリックすると全画像をライトボックスで閲覧できます。
-
-        ファイル名の先頭5文字が同じ画像は同じグループにまとめています。
-
-        <div class="work-group"
-             data-category="advertising"
-             data-title="クライアント名"
-             data-images="URL1,URL2,URL3">
-          <img src="URL1" alt="クライアント名" loading="lazy">
-          <div class="work-overlay">
-            <div class="work-overlay-text">
-              <h3>クライアント名</h3>
-              <p>カテゴリー</p>
-            </div>
-          </div>
-          <div class="work-count">3</div>
-        </div>
-      -->
-
-      <!-- ECC (ecc_01, ecc_02, ecc_03) -->
-      <div class="work-group"
-           data-category="advertising"
-           data-title="ECC"
-           data-images="https://drive.google.com/thumbnail?id=1Bu8SvVW6a1oMZt0j4c431dc088b3v_C_&sz=w2000,https://drive.google.com/thumbnail?id=1mfjBj8sJOca-tZ8u8W7sPHOBjVg6vTYv&sz=w2000,https://drive.google.com/thumbnail?id=1jGxV1BF41X8MHx7nwTHG6wrwhazNXiey&sz=w2000">
-        <img src="https://drive.google.com/thumbnail?id=1Bu8SvVW6a1oMZt0j4c431dc088b3v_C_&sz=w1200" alt="ECC" loading="lazy">
-        <div class="work-overlay">
-          <div class="work-overlay-text">
-            <h3>ECC</h3>
-            <p>Advertising</p>
-          </div>
-        </div>
-        <div class="work-count">3</div>
-      </div>
-
-      <!-- ORIHICA (orihica_KV_1, 2, 3) -->
-      <div class="work-group"
-           data-category="advertising"
-           data-title="ORIHICA"
-           data-images="https://drive.google.com/thumbnail?id=1dyhliUqfV-0lCIfAidBi6F0YMYNTmvU1&sz=w2000,https://drive.google.com/thumbnail?id=1cr4H-1MKvmUhS_gltBYoTYK7zvEo2MOF&sz=w2000,https://drive.google.com/thumbnail?id=1KgbR3Nsi6UMNlQBhpw2SaIUIHpj1MGi_&sz=w2000">
-        <img src="https://drive.google.com/thumbnail?id=1dyhliUqfV-0lCIfAidBi6F0YMYNTmvU1&sz=w1200" alt="ORIHICA" loading="lazy">
-        <div class="work-overlay">
-          <div class="work-overlay-text">
-            <h3>ORIHICA</h3>
-            <p>Advertising</p>
-          </div>
-        </div>
-        <div class="work-count">3</div>
-      </div>
-
-      <!-- Tokyu (Tokyu_GR_B1poster_KV, Tokyu_GR_B1poster_Security) -->
-      <div class="work-group"
-           data-category="advertising"
-           data-title="Tokyu Corporation"
-           data-images="https://drive.google.com/thumbnail?id=1J7-uu1K9JoidhjbSkMB_oBOpF3m33bOE&sz=w2000,https://drive.google.com/thumbnail?id=17ieJ-5PNm0bzCQY2ntRZ5eolBSrT7x9n&sz=w2000">
-        <img src="https://drive.google.com/thumbnail?id=1J7-uu1K9JoidhjbSkMB_oBOpF3m33bOE&sz=w1200" alt="Tokyu Corporation" loading="lazy">
-        <div class="work-overlay">
-          <div class="work-overlay-text">
-            <h3>Tokyu Corporation</h3>
-            <p>Advertising</p>
-          </div>
-        </div>
-        <div class="work-count">2</div>
-      </div>
-
-      <!-- Captain Ambulance (民間敁急 x4: -1, -2, -8, -9) -->
-      <div class="work-group"
-           data-category="advertising"
-           data-title="Captain Ambulance"
-           data-images="https://drive.google.com/thumbnail?id=1QXayVhpTIddHzrMOPb2LPNrkABy6S-1K&sz=w2000,https://drive.google.com/thumbnail?id=1n5EOP_p-nqHrqGe8fXwFsT31cAeLyvhy&sz=w2000,https://drive.google.com/thumbnail?id=1PKACXXJAnKkGf9RYSjsrZkpWN5Ddj6kt&sz=w2000,https://drive.google.com/thumbnail?id=1H0CyoPBCaHLzT4JOZo8kjpiIoDPBeaFB&sz=w2000">
-        <img src="https://drive.google.com/thumbnail?id=1QXayVhpTIddHzrMOPb2LPNrkABy6S-1K&sz=w1200" alt="Captain Ambulance" loading="lazy">
-        <div class="work-overlay">
-          <div class="work-overlay-text">
-            <h3>Captain Ambulance</h3>
-            <p>Advertising</p>
-          </div>
-        </div>
-        <div class="work-count">4</div>
-      </div>
-
-      <!-- NutS (Nuts_poster_01) -->
-      <div class="work-group"
-           data-category="advertising"
-           data-title="NutS"
-           data-images="https://drive.google.com/thumbnail?id=1jxVUiGBFJ1vvuHN5KrZHNLiqiekvrJ8e&sz=w2000">
-        <img src="htu���輽�ɥٔ������������ѡյ���������ũ�YU�	(����!8�-�i!91�ť����(ᔙ��������������9��L���������􉱅���(���������؁������ݽɬ��ٕɱ���(�����������؁������ݽɬ��ٕɱ��ѕ�Ј�(���������������9��L���(����������������ٕ�ѥͥ�����(����������𽑥��(��������𽑥��(���������؁������ݽɬ���չЁͥ�������𽑥��(������𽑥��(����𽑥��(���͕�ѥ���((�������	=UP����(���͕�ѥ�����􉅉��Ј�(�����ȁ������͕�ѥ���������ɕٕ�����������(�����؁������͕�ѥ��������ɕٕ����𽑥��(�����؁�����􉅉��е���ѕ�Ёɕٕ����(���������(����������_��,��nӚ�䃊T��W������ώ
-䃎��
-����������(�����������F+��W�
-���
-ߎ��ώ�
-ώ�w����#����������
-���ώ�������(���������J���Ǟ҃�vC���w��ώ
-ߎ����
-K�r����fC����W�7��g���
-�������
-��
-K�>C��o�_������g�(���������(���������(���������
-����
-��
-��ώ#���O�
-���ώ
-K��ǎ?�B����_���æ��������O���
-?���|���(���������?�
-��
-��ώ'���O�
-���
-�������>��
-K������_���g�(���������(�������؁�����􉅉��е�х�̈�(�����������(�����������؁�������хе�յ��Ȉ����𽑥��(�����������؁�������хе�������e���́���ɥ����𽑥��(��������𽑥��(�����������(�����������؁�������хе�յ��Ȉ�����𽑥��(�����������؁�������хе�������Aɽ�����𽑥��(��������𽑥��(�����������(�����������؁�������хе�յ��Ȉ����𽑥��(�����������؁�������хе�������
-������𽑥��(��������𽑥��(������𽑥��(����𽑥��(���͕�ѥ���((�������
-IH����(���͕�ѥ�����􉍅ɕ�Ȉ�(�����ȁ������͕�ѥ���������ɕٕ����
-�ɕ�����(�����؁������͕�ѥ��������ɕٕ����𽑥��(�����؁�����􉍅ɕ�ȵѥ��������(�������؁�����􉍅ɕ�ȵ�ѕ��ɕٕ����(���������؁�����􉍅ɕ�ȵ啅Ȉ��>��r�𽑥��(���������؁�����􉍅ɕ�ȵ��͌��(��������������W������ώ
-䃎��
-����������(����������������F+��W�
-���
-ߎ��ώ�
-ώ�w����#����������
-���ώ������
-����
-K�&/�3�G�
-/����(��������𽑥��(������𽑥��(�������؁�����􉍅ɕ�ȵ�ѕ��ɕٕ����(���������؁�����􉍅ɕ�ȵ啅Ȉ���実績</div>
-        <div class="career-desc">
-          <h3>広告 / コーポレート</h3>
-          <p>ECC、ORIHICA、東急グループ、民間救急キャプテン、NutS ほか多数</p>
-        </div>
+    <div class="masonry" id="gallery"></div>
+  </section>
+  <section id="about">
+    <h2 class="section-label reveal">About</h2>
+    <div class="section-line reveal"></div>
+    <div class="about-content reveal">
+      <p>栗下 直樹 ― フリーランス レタッチャー。<br>広告・ファッション・コーポレートなど幅広いジャンルで、<br>撮影素材のポテンシャルを最大限に引き出すレタッチワークを提供しています。</p>
+      <p>クライアントのビジョンを深く理解し、細部にまでこだわった<br>ハイエンドなビジュアル表現を追求します。</p>
+      <div class="about-stats">
+        <div><div class="stat-number">10+</div><div class="stat-label">Years Experience</div></div>
+        <div><div class="stat-number">500+</div><div class="stat-label">Projects</div></div>
+        <div><div class="stat-number">50+</div><div class="stat-label">Clients</div></div>
       </div>
     </div>
   </section>
-
-  <!-- CONTACT -->
+  <section id="career">
+    <h2 class="section-label reveal">Career</h2>
+    <div class="section-line reveal"></div>
+    <div class="career-timeline">
+      <div class="career-item reveal"><div class="career-year">現在</div><div class="career-desc"><h3>フリーランス レタッチャー</h3><p>広告、ファッション、コーポレートなど幅広いジャンルのレタッチを手がける。</p></div></div>
+      <div class="career-item reveal"><div class="career-year">主な実績</div><div class="career-desc"><h3>広告 / コーポレート</h3><p>ECC、ORIHICA、東急グループ、民間救急キャプテン、NutS ほか多数</p></div></div>
+    </div>
+  </section>
   <section id="contact">
     <h2 class="section-label reveal">Contact</h2>
     <div class="section-line reveal"></div>
     <div class="contact-content reveal">
-      <p>お仕事のご依頼・ご相請はお気軽にお問い合わせください。</p>
+      <p>お仕事のご依頼・ご相談はお気軽にお問い合わせください。</p>
       <form class="contact-form" onsubmit="handleSubmit(event)">
-        <div class="form-group">
-          <input type="text" name="name" placeholder=" " required>
-          <label>お名前</label>
-        </div>
-        <div class="form-group">
-          <input type="email" name="email" placeholder=" " required>
-          <label>メールアドレス</label>
-        </div>
-        <div class="form-group">
-          <input type="text" name="company" placeholder=" ">
-          <label>会社名</label>
-        </div>
-        <div class="form-group">
-          <textarea name="message" placeholder=" " required></textarea>
-          <label>お問い合わせ内容</label>
-        </div>
+        <div class="form-group"><input type="text" name="name" placeholder=" " required><label>お名前</label></div>
+        <div class="form-group"><input type="email" name="email" placeholder=" " required><label>メールアドレス</label></div>
+        <div class="form-group"><input type="text" name="company" placeholder=" "><label>会社名</label></div>
+        <div class="form-group"><textarea name="message" placeholder=" " required></textarea><label>お問い合わせ内容</label></div>
         <button type="submit" class="submit-btn">Send Message</button>
       </form>
     </div>
   </section>
-
-  <!-- FOOTER -->
   <footer>
     <div class="footer-social">
       <a href="#" target="_blank">Instagram</a>
@@ -813,14 +205,9 @@ K�&/�3�G�
     </div>
     <p>&copy; 2026 Naoki Kurishita. All rights reserved.</p>
   </footer>
-
-  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" aria-label="Close"></button>
-    <div class="lightbox-info">
-      <div class="lightbox-title"></div>
-      <div class="lightbox-counter"></div>
-    </div>
+    <div class="lightbox-info"><div class="lightbox-title"></div><div class="lightbox-counter"></div></div>
     <div class="lightbox-main">
       <button class="lightbox-nav lightbox-prev" aria-label="Previous">&larr;</button>
       <img src="" alt="">
@@ -828,209 +215,91 @@ K�&/�3�G�
     </div>
     <div class="lightbox-thumbs"></div>
   </div>
-
   <script>
+    const W=[["accenture", ["1Kd2lp2082vgUQVPH-AoBoF1U2Q3lyZrD"]], ["AKKODiS", ["18E9ad6-FCa-M7xusQcu2KnbmgdnZGPyB"]], ["amazon", ["1i1OxWYuPyHzdfMIN1mKZPBdrX_P1aMfx", "1XuF3kla5o6oIXjEIUdPIrZx6aykxuHfS", "1z0PhWks8N_Ov6SfxTI-nbuX061Q1lDFa"]], ["ANA", ["1LNoBP7NQn-h-NI8RLMYH6muIxZ0Q2p2P", "1lzW3NOqEcJXiNlhA8nj3CjmvIoTaG2VB", "1XBneJbzfBs_1XeUSanNSgOvT9hjOERZ9", "1R0plRj7IInAXhiTWaJ0WZdgbL9baEcYx"]], ["anshin", ["1AVRRBhYEedd5LIcN0wJ-z-LT3ZKuV6mn", "1te6cbRJeyPvoMKRTacLA_Z7FpVL4lG6S"]], ["AO", ["1za3C7XGqBRQSxWZyQP2VDVlhACc5Mv7l"]], ["APV", ["1M-zWksgZSzDt8-u35rCLogh8-dHfQ-0A", "10tueM6puy2pqgyU04TxoU_f_TQ-s371i", "102znuAGWV6U3SFF0ce9jUKYDMpAw4RXY", "1XLbOPn7akXTPRMkAAYyS4X3cru-3ienO", "1tbJfo9sT50A_mbVCq_UAC33VcgQgKom2", "15TtAdfsjIiX1abFJ2rUBLxl3_8-QZrz-", "159Q7zAeBuO3o3bNaUteYckOZy48RDvpa"]], ["AS", ["1FGhf0GTFPSrKCeaMXBmpIsMOMBzarUJN", "1yOt9014PhcUbIdlmM6EdjB0vbJQE2HJF"]], ["Asahi", ["1xi2V2KucmWkNnJ-UnI5Tn63XG9TMxggF", "15AQv05I3zFPblLLXgqctsranuFS6B3zQ", "1G3fvV7i3LinxRTSGCBW5fA9m7ckjAzQl"]], ["AVEX", ["13m4VQZsdgnVoD4ipNz2o6yGB8cfCHMu2", "13h5PvF2NWFf8dfYEhmoEPQ6Fuu1KsXh1"]], ["baitoru", ["1GYAhF8niunhvNAXY76zaqneUAMRsPKMU", "1Ny6Mdv9_rECNipPTWG6tQ8qUr5Hcj4W3", "1c9lmOItjOgqIEVbBBwkajaMY_C3E-ncz"]], ["BANDAI", ["1eANTky8rb4CYH7tn8Bxu6zINxIvJvheL"]], ["BIO", ["1cC6cP9UTI7rPeDzuchr_jgtMHy4jCHdS"]], ["BOOK", ["1wDgOonnvA4xR820L4s9i3bzNLplBfJS-"]], ["bourbon", ["1jrj_ipj6xMc4H0PLessPWZEdnqEZaQBj", "1JGcZRSqSNrVHlpU9cHPVabe-wu4JB_vK", "1-v6AC72j5WzyeobXFv2nsfFPv9UemSNw"]], ["brutus0485", ["1Z8EHm7Owc9eVkEcVQTOyjUCDUxrWrTif", "1aJ0fEUgPIcnZJaxpWLUCLtCtVvLsmMx1"]], ["BULK", ["1zkn3akNaL1NCvMbPOVmJ_-ycdkJ3FWH0", "1bd8Obd_6haebmmMdZjZClb0r_3rCO12O", "1QJU89wCX9VR_3by07uJZ4g7rKDjdx8Dl", "1nl7DrWQb4P-8j-Jt5V-PK1kuhIUpGqp0"]], ["CCJC", ["18eJEQjfmXASq-MqcxMbNDLxV7k5PwLzL", "13l6tDgtB7NJgYQPj5zdJJ2eRLSQH9Rjn", "169UYareV2saL_f1KIUso_XhUGpePdsSQ"]], ["century21", ["1kQXrd8QFYx-ns_nI2Ui6ajmaIatqyW9i"]], ["chuden", ["1QcG7Mj6Ljp7UB2kKq-75SWTYjg3QWv5o", "1cdS5bSaFjspL7m9XEGkVdn2frPcjOAAO", "115P1_sABJTE46QKHpsSRrZewqA_q72qk"]], ["chuusaibou", ["1_AJ2gyVRmW7fD3CZUpuy7cqpIJ7YTPrv"]], ["Coke", ["1Y8b0L-b5Vf4rvRmjMMO8g8mfqJx8NLyW"]], ["COMMERCIAL", ["1KT6nASHK2PmCbCoJ88b8aJ4YkI1p80Tx", "1XvA392kkRzHGD91hOFPmiuv3jXOoK7Yr"]], ["coppertone", ["1UOYNE9-kNWjnhSarWwcZ93K3W7dGqFtv"]], ["CSP", ["1r5_xB-a0s5gbOrtT3SLwm7mwCBQALE7P"]], ["cup", ["1WOApT-14y3JVNMRc4Wu6Ky2JbVnkeJ-H", "1QU8L59ro65_xOkvk-CmZLjMzb6PfhUdH"]], ["Daiwa", ["1mgZO_jJ33biCkYjCWA_-cn0S4JRxEzOX"]], ["DCcard", ["1wtf3VFgkum4yq6C1NERlLXjnCUdAfvOa", "1w5YSAp6aWqnIA9oAgV1vgZzCWXQO-X9k"]], ["dish", ["14J_zlHZoPhsb4sVqn25NwKmJSgMsDP0A"]], ["Disney", ["1gwXKwj0kUY3Gok9uRaH1gMrNPEgj00a_"]], ["docomoU15", ["1vQWcw7LKMFZUWqkxts9hOqHyFme4Vr8e"]], ["DRY", ["1AxgDLVDZ_gr_fzCSrJJs3sS3HMt0KkvY", "1xcG5dUZwYl7xWhLRk7hVEqivi4T2fdYO"]], ["ecc", ["1Bu8SvVW6a1oMZt0j4c431dc088b3v_C_", "1mfjBj8sJOca-tZ8u8W7sPHOBjVg6vTYv", "1jGxV1BF41X8MHx7nwTHG6wrwhazNXiey"]], ["eneos", ["1Be3oNXsBn0A389SLhdmw0lcmU0gnTjbz"]], ["farmind", ["1QaB7xzhbhQpwG02UmR6ejfpbfKEvZ8Z7"]], ["FESTINO", ["1t0Qt6Uo91wGTFdXqHnRDPuDRdRwNgkKZ"]], ["Fujifilm", ["1I3OUqs1967eOzevO1Zlatm0fDPt9yaHD"]], ["GABA", ["1xPaMlCv22N_gifLv6Gv35qRxG2ibh0oW", "1XNZ3wFEtwbi0w_EbsIdMkQuV7KXZoz_l"]], ["Ginger", ["1PvwrMVJYg-yQ5Pv34AtD21FdeJYYlr5D", "195F9kUtJ6GdjQoTTk4Kobut7ryzHqCuz"]], ["glico", ["1T5nrBigyNxaQdykk1twrGumv2L8ZwXRE"]], ["goethe14357", ["19hGefdhK-YL62a3mhkCxB54klEms5jvi", "1QgdZlaQDhL4yYNOIUt3tn0pItEYAoMy7"]], ["google", ["1F8Ln-Tfn1cCWv_bhzlly1X-XwgGW11dJ", "1H__UvJvTu9fm00pgynoVubsSbyapxJOI", "1YXAhs_VKVnjS20vD2fy8PvrktZLkLj1g", "1hwdrscsuZQ6us-gXQi1VUdM6eUUWM9xd"]], ["H", ["15lknAIZwGdPPwfIWMWfSaWs41njXRrgV"]], ["hanasaki", ["1zUDUij78V-pMkjXG_jdZUGNv6a5vCFof"]], ["Harper'sBAZAAR19901", ["1-6_ITCtGC_JhRLt3BQaf_WORnkVA7lDN", "11gDABqAkwcVcDS8oUO5Vr4u7JO6A5K3A"]], ["HBR", ["1kCuFhjOwiSBcNHqr6wrnJ32Zy7U_lNv2", "1yi2NdN1Ncm6eSBtzPkqcIsL0LmtSvTLI", "1yafsehZllL7UOs_t8lHoKF6mx-2xXbKs", "1Fti7fxxKkCbpeFSqkSCULBy1_Dsc2dIo", "1Lc0ZNqrzjcy5HeVXWazJ9AMyAzjK7BFP", "100eqWZX16VmPAUafSkDSZZeHlHCyqtxZ"]], ["HeartUp", ["1iibL4x9uvmieiIFp1X-yXd5qQ9poSL-F", "1o98aRetf5kP2M0ns8dy2vr6s1aTy2010", "188iPpkTy69V1ptLVs9_073rHDexg2HsD"]], ["higecha", ["1_BRuy4g7AJh_iT_vNBTJe0OruFE7DO3Q"]], ["hikarimiso0302", ["1TPhZHD6TME6uBX9qDPdgrvKh0BGIdlYq"]], ["HITACHI", ["1KysY-cY3X5uMdw1eGsYOo1fswt6S01cu", "1I3eDVE6IUaSbCaFSMaGWKvJohXGdjl0p", "10QDXpxYbAKMai7IdYhtDB2BiEKJ_t5Yd"]], ["HUAWAI1093", ["1Fz-n1Q5pYSfs_6I9Br7b3GH6NlFOL3tE", "1B0Jollx2N4xMMFY_EdFRcFDULwduW3UJ", "1_HsL6OnPs_7H9gWXqQ-NHBRe7ad29NbV"]], ["HUAWEI", ["1gJkZnroM7KDUwCUWbOAVBRlN25yVFx2f", "1klhh04kO8L7VufNnBBnQDz4ExcQcCNbL", "1ykTxiYihajKtPzq6apUca0hFENrdAPZ5", "1znnxQYHJA9ysn3lKgoWMUVQJgeREkv0L"]], ["iD1", ["1I2QmwOv6Ju37CZsHvuYMx4jupR4lpzlr", "1njjVU5HEYtPrMStjl3xtwaBWzCe0a4dr"]], ["iD2", ["1gI7FA1gHIS10VJpjn-iu0Vz2qQ-Vpam2"]], ["imuraya", ["1JT9cYH9q1usQhb0VCRzmeFwefztOyUOB", "1YtLuv9IvWJEhqfFoOCGt9zOVp_6UmJKr"]], ["injelly", ["1xTkjawU4PkCwPjd3u_x8VJNXj5KkCSWI", "1TGRR4Lzn01EBiBh9seBhBWzSHSQTwDPP", "1YzWGgjZIapReqcLVRdamj4lrz8DroIph"]], ["integrate", ["1VB7jcgILMn4HLoFQiVRnWuj1QxEEOZ3x"]], ["iroka", ["1UKy5J6z769cSMkACMasWdamYHzCb5von"]], ["IS", ["10n9JC4mJdxQ-kFkKJUkB4isl8vkgv7sd", "1orOSe69yBgEWXiUD2928KYOp1o2tDWeh"]], ["JACCS", ["19I3iZB2Cqo_9XeFbRWdxk-8WEX6QyFcI", "1jXZWOTqY3syiUGkQ6wg6SRYu14nPg6QQ", "1HctKUsyNDTh0v--xOcihB4TP0gaYM0UR", "1_yh_bxCyPcq4KCGXY-IHcruKykROuBKK", "1MbUk164hsk5oKGbuKGgnc40EwMHI7xrs"]], ["jack", ["1PoJe_4YwDWcq7gzNRAK2fu9QBbh3s_uW"]], ["JCB", ["1pkNb8W7y7B4YgYmoBt696QatrWKdNHD1"]], ["JRA", ["1XF4YhhXoDxLmdHdb98ZNV3Oqb0y11Ck_", "13SRF4NyeFswhGqHwOtoe5HLLYZPC3tvm", "1ju9qt3CKA7erKSLM0OVa98Y1wb5ZSTh5"]], ["JRA77", ["1aJl6NuoOmn60lcakecVVJnSRWvUwvNJ4"]], ["JRA80", ["1TPfuIZ-smLQ4UeQq4dFYCJHouTBa-G_G"]], ["JRA81", ["1h_cowxEPy169twDkk_rUXjdvgfi6wOo0"]], ["JRC", ["1RoHEs0qanHofzn6gw4T3RBt33UUvj-go", "1kMG4QT65T0iNUVt3ApIxbc_b7A9UWLUq", "18D4olDvXbluosvr6a_ecOd6nfRctNknW", "1snhuns-WNPlppDOn4Wzus2Z1xR1PR9VX", "1lYf71SkZa7u3vVhlINDVJARwm5bJhhYg", "1A1dJZAuhNAQqF-meH98aoZKi7Z33cId9"]], ["kagome", ["1rTvmQlb93kTAivv2C5cwWY-9ohH4nsis", "1pim_4lKEAlHq-5wVe37VGDf9Nm0EUj2M"]], ["kahochan", ["1rG-TWhlUtG1VM3Nhfga3R3DyM3CzJGeT", "1pf7ucz2ZBXFaPh8oXmu5L-1jpCyd5Y_T"]], ["kanro", ["1gP1uqS9S0BE12WSvsvutDFR73010qBDd", "1MR638LITYz9pBa-9SgJQIv6R02MJtBXV", "1IqFvDquA5B-YvNLILyFScRbYdM-OXlpY"]], ["Kaview", ["1mRKouNoVdVi7mYCG0fyJXJ_7E0AE1duj"]], ["keiji7", ["1pP8dMbAJ7unucoDGEA74fej3hWZgbYQt"]], ["KEIKYU", ["1LC_XD802udi1AcalfXTOGM1emwXmF6Ax", "1VYXV9nwbhnqydkmHBOLiQVhR9uCJrbUQ"]], ["KOIKEYA", ["1x9rSqtlKEaH7U-Bc8_-84VsydAp2yFQs"]], ["KOK", ["1sueiuPqy9yzKbQiQYfva-dBIYWA_qMtT"]], ["KOKUYO", ["1A8RbzBP4AeoomN7W8pv4faXEGlH4SMkM", "1Mf2zLqwm4XKCTzZWeWAPJ7LNBBV7I-yi"]], ["kotodaman", ["1cnJRQ9If6RsJe2CfabvrgF_1PjcUdSZL"]], ["kyuuzin", ["1B9IMo4OCxQwl59R9aX-2H7yetR7by__e", "1QHmFcszFP-bJM2cDD8CT1Kj8MPZH5uPE", "1ORMCDexFm732I-cc6JV8yQMyR5LNHhpS"]], ["L'Oreal", ["14qc_VPAfoZjK76wxgKNzcTe3TGRtOpVJ"]], ["Lark", ["1liMsU4gGRpTG2Xb0kTF8WU0PtiKWJnlR"]], ["Lashaddict", ["1N-d85Lj9LtF7N90X-RFF_PUcodF1rXpb", "1pnWr7vLwgjEiIT3E2AtbBO_r3iJyUpHa"]], ["Lcode", ["1q-AW0TMw5C3bTbf_bDLbduFB0XGAIGgO", "1T9f6MHZZenZFFRdWw-CdpVvxeWZXI-bj"]], ["Lemon", ["13b60U7t4yi0bk4Wvmd8jH7wy7FJ7r2tS"]], ["MadreX", ["1vQ_j95aPoMGA-eaTwBGxsZkNqvPek56z", "1tplP7pbfwxy3ZnoSBA0UXlEQy85-gi6q", "1HDScar8hgGJ9OX1KSckUZwzY3SZhzTkz", "1eUQjXKLv9g4SCcoE-wpVr-k_ZPmjUelX", "1_SKfB6j_4oSvR6KgA3qfffy_sbRHg_Ie", "1Rq1k1CaIwA88WG_TFx-OKu16GW3cWeJp", "1rV61M3RzhJHUI-ePpILJF81BD4mif7Wz", "19uIAqdxWNkXxaT3r5lXBxXXQEKDJNK57", "1ImjIfxAAP6KnhDBYrS34wFhLfp7T9Gx1", "1YW4F2XyfpM4H_YYRxEmlA38tB67Q_gBu"]], ["majomajo", ["1DXRYv5qplZkuA-yEsMalV58TfEtRBPty"]], ["MASHIRO", ["1olsdF8FjLEmRPoo030n2lxhxkzuUuvZP", "1LzgnKM4iVIEkSB-vTP_DmoIU8Dg8lowe"]], ["McDonalds", ["1O97XVs9evsocp6l1fEK-ZKi5ELY8JiII", "1cx-R6SQCj9rMkQAhLbnpgmQd-UvtHkS-"]], ["meijiyasuda", ["1eb66kUzHijbWPN0cVq48Dul8lmGyqgGd"]], ["melanoCC", ["1jTX8uxahldIaGDT2Zws8ZH7LeLfKzuQ-"]], ["metoro", ["1knZLJqUAVX6bDGokFdtOcHkn_riEzHLM"]], ["metros", ["18pkOhoOy0MFz_MzVJ2yKAT0wU--KWklQ", "1EdZjeRQAW4ftpeqSV5iv137Mht3IXqCE"]], ["MGC", ["1HqduTBUl1YmeLidaYOe3QwCUA_seVKYa"]], ["mineo", ["1zNlKJQDv1NXaY8d8LrI-_gXW2-65O6aE", "13VQA-xaEVEVPA2Mcz8RABNfjZZLXmL0h", "1CM7lZKtj8UIOvk9WMMzy9wXqRWC4pBm3"]], ["mitsui", ["1FUxtUY16L5M-K8ht9D-kcxdZ4nteHx3H", "1fKEcjITPPgXa-JDzyeva1nykqCNzJBiF"]], ["Miyashita", ["1HcoDCNdsa2_9GWA9_O6ZxoFj8lR9wE53"]], ["monst", ["1aAfz8722e8iU4NR6KIrw29AaRli3Nmzr"]], ["motorola", ["1_W4GJga71sAv__JXvQHs1LXnINbXIG6x", "1lhcGRfFp7Hz9bfKpHi9RE4ZPpaRssljL", "1-aZcRGVtY2Ybj0kMNRWstG4s8Lh98Xs0", "1hcJFkRFywzD7xMEFN9C-EHPQHaFwg7k1"]], ["mynumber", ["1LZdmf0Cj15nPUNei3C_f2PqTStzMOdoL", "18SRKwZ9bRXkRApulBAt_Pl37Te9rqnC6", "1_TzOEy8hTiQvyPXbZEZXqjOSmc6iNuI_"]], ["Mytrex", ["1ARKq52KYJ0fn-uHE1frPYcQDOh-jVUiI", "1Lk-8HFT16Erf-v3Qszg4XHW6vF8O-RTR", "1BTYtFg2uiP_372gPXVKj9vwTRxoFXpky", "1nn5Y4Ydpey1uS7f1HeGFSqLIImWSFvqe", "1gT_crVy9RTtX0or001TIt6JlsrMoyA8k", "1aZ03CJeAnYUuC7vEPvCHhPB0DruyZEJm", "1bk4VAQx1Uze9vQOZaIMm103SGWgMO728", "1GAXZwnvsq38Xrcb0f5BwenXmiHueEDWE", "1XsbDhAE7hvoXvRjMyR9r89lPRXl43rZO", "1HbvicnokLxdNt4vbjCngdcxSuDZk5G2Z", "1uulXIAXquLLRWuiyu_N3xzbgtIbo5JDv", "1JHguHsZBVS0aIxJeaqeMcP9eIdRTLVwg", "1pMcPDA__vongg3pjGa2M-KOZ8q7hOhmG", "1TxeqkKit501aDmCDxvm3I_1u_TEOM0vS", "1LK1ZQp7yzHjFa9ATZakOFeJ1DOj7LwcJ", "1wzpCQlduR2o8HHcbMIxFqDW2HkgiwvtE", "1T5LWts1_QySAO9LXcepWIU_BK6tnZWEC", "1DJLnZ_aVD5rCycAY6e5stoHHPmqyBR-L", "19t4UipcY4MM4L4CtTVMPBaec1UY_5bUX"]], ["N", ["10FU3OjDhdrPD3h4ynRB8t2aBWaOy7oUZ"]], ["nature", ["1hzYDndM71ioes9Tg_OUP-nOYuQaNYpO8"]], ["NEC", ["1A46Kw3h1tWocCTFr1QONqjx4NGTFjQqu", "1uSbkUGyZGi6jlcDva6Ml3wDg93AJDBMb", "1g24CRkzTS-QbKV0dY_COPwou1DyVlzLe", "11wn5u7z7RnBAl1fT6nPsnInNuAFw4Ezp", "16vgmw-J-dhI0UQkEpC14WInCsIiptJIn"]], ["nichicon", ["1_YC1z1vF05qKSFnFFOip98_qnYqbW-I5"]], ["Nishikawa", ["1I95PXcjpgH0r5BDnvB5RbUuB0Rh_sp4K", "1FtnXpn4HVKcA3Ks3OG8xqntEzNihUwId"]], ["NISSIN", ["1wRx84fqGGQLRlhfof7bq_2XfDcvMWS1O", "16XjvjSUoltCM4gU2aOtH9oYI9rswBORY"]], ["NO", ["10P4VDvefIUAEW-Fn82-w6feppDBJNLzY"]], ["NOAC2", ["1U6ARVfIqH9tbzgIxxTS1zUI99cvgm28u", "10rQnSg178vR4fPVbCDpMtHg_qpT61OGZ", "1ge8539ynROLxWxZNS9eSkmM2CkbrODYo"]], ["NOMURA", ["1iCa28ME3COrNqsLyGAakbCu9a25orRfJ"]], ["NTT", ["1ysGwg9aNx7UCqRkPae4EeG-6gZ-yx5H8"]], ["NTTdata", ["1MMUlM1cBnOCmTi3d0Xh7rkL5wB2oV-RI", "18HmiQVxVcjmbwDfdt9gDkN2sT0O7HncQ"]], ["Nuts", ["1jxVUiGBFJ1vvuHN5KrZHNLiqiekvrJ4e"]], ["oddspark", ["1oPUVRDUSaTwBxbz9pMxGTTf74xujhQEw"]], ["okabe", ["15IxssKO6GoRlQXW7Dny-zzaNF8diuJSm", "1K8IeYSJhMDjQ7CSnQKjzljxYarmM0svG"]], ["omikare", ["12Fnya9fCH9L4uDwZsSEQHbl5bdV8asyx"]], ["Ophtecs", ["1gsd1BO4ZgSKbFVOIA8WbwwTQVW_96W9j"]], ["orihica", ["1dyhliUqfV-0lCIfAidBi6F0YMYNTmvU1", "1cr4H-1MKvmUhS_gltBYoTYK7zvEo2MOF", "1KgbR3Nsi6UMNlQBhpw2SaIUIHpj1MGi_"]], ["osaka", ["1sXOfSKaCcxlv1R7FbhGxU_Cxcm4pBJZk", "1SxhHZ-4DGcXrHl1zniPirK1pvKrvIVMS"]], ["Park", ["1zZRMr3PgxySV7lQE5DKcWqpQWR_3sCT7", "1peoJdmJ21uIPnRUtyIU4zZyxxRJbEoC0"]], ["povo", ["1gQOPpSIvng9KY5WHKnSUwaOdSUgkAt2C"]], ["rakusu", ["1qJilAaZpe4e1ZpmcFJkJrsl5NsQ_ahaQ", "15UQ7s-KMIRS7TXv8YsA5A_rH8C3p-bNG"]], ["Regain", ["1TS7AjfBhwrJtjZmes70tERUtbbJPV0PB"]], ["RESONA", ["1AVD9H2lawAFt4jGFyLh4cQYldcG1qxim"]], ["ROSY", ["19nb1Mq7d_KNE3VaOxWtZUWLPQJtb9g9t", "1IZKFD9WMVz4qgPR1Eg1hId3j6z-ZzJk6", "1M-JoP3SrZMS7VCdLLyQ6yxZrEPcqodoF"]], ["SAPPORO", ["1PiW5tNHWsayxW7O0QubAqPrc4ytXWpFL", "1HatEatLwFkDOke5-pZ_bIV__Id59SNVm"]], ["SEIBU", ["1GMHRaHcc8ZEGANkUKAUILkea-OueWft4", "1-whn02zIvqpK6oR00QsEBQohX_kPG80O", "1ysqBLPXMR8dQx43KQtF_2uiC5xBJFmlG"]], ["SEIKO", ["1VO6keFPuMoCYylSf8P4sgRuZ8HrC21Ge"]], ["shimamura", ["1Srcjg19HrBpnEVjYW3Qw9XBGNROQd9zj"]], ["Shiseido", ["13OK9jwSk-2qGMTbchPEMZbccrRp9jOmm"]], ["silver", ["1JoBhVS9z2DfZW1yIPvvGcb26tgDCG_0K"]], ["SMAS", ["1TIVRq7vnyOK4s-CJacPYY1C5dqmZ58Z0"]], ["sogo", ["1fP6EOQVqVTxOcYx04EVO_HaLR1FpMI6E"]], ["SOMPO", ["18Qd8_bX5yrcRJMupptZOJ2V2j0K2RC6H", "1RUNIfMEPKPnP_tps_jfXPI4APWKl2BkV"]], ["SONIC", ["1VZmlT7R8L_49yxPinW61lT2r8aSpwAT7", "1-cbPEeOwyNPhSa1KF3-JF5BvJ7DbMmR-"]], ["SPIC", ["1P8aZYGYG6YHZP4Tux7CB1ZQV8d70nu7r", "1WXx6t0W1yFUZKL04aau92WrgrM1nAWmL", "13X-UW8yzQCym_4hYbu7eE1JQHyuou0yY", "13fwxKpRs21QWG1ddk9YPHb7YWaI2miHG", "17y3duWOl-sKz2-l6CFy753LDnH6-n7BK", "1KwUjx_bzTd04Mlgx75zq8E_UxzIitX09", "165Kh7_2mZQEk1MNTs8Tz95I4Y6gE-HT-", "1f09Jo9Vo11r2hCXPUVVdXkGrPwyGbZ1q", "1oDil-0Y1324-yI2BvADlRHRSvxbpb4KW", "1km_Gf7RgWluy9CER72KfIX8jxiA71vuS"]], ["Square", ["1oSyoZwQc1vLPg9gP4rb1TFfnT5CIx6Jk"]], ["suntory", ["1SgpHJebMGhTeZsih1kr2X3mUZBSDIJMr", "1XgQ5tnvBK7eduv9Vu6X8hNFXXBSQDBln", "1eQbVo-wA6PJSfzI9TQE61k_pMcXliLxB"]], ["surface", ["1e1fkRCNcPVO4OwNcCVUJ-iBouzv4yrX8", "1EZogbUtK6cOcYxUMMwbVytMC4lu0Xaph"]], ["SVENSON", ["1BiYFkbOJII3bu6ufp3oqNUkvWShXVDfF", "1eD6nBwBD-3KIL0JPLcMuFxpPTbcvukU8"]], ["Takara", ["1l0Pj1-1qjK5uOGBy1tl6eiM6PidjZOSg", "1BRGaxKfLwgMpf28QG9grC_KbQG6UFTSV"]], ["TCS", ["1dYUl7BhdiiyJr3E24QsMFQ51QxMmFsva", "16cNaihhzCGVVshorn05MfZ85dHzJFRVU"]], ["thermos", ["1tPCyXZZ-NyIt8SDz_KEMqwo46QNSIFiU"]], ["tokyo", ["1PV60xE_yH6KQb_AoghSBjP9yTQipqV0Q", "1tx-gdrwdDuymaNnao01nA_DB9poyY0yq"]], ["TOKYU", ["1z_TIOinu74-f1ZKM46RmckCvpSGEXnsL", "1RwGseRuYD1AxB7ZEIORHQSatUWoa-Acu", "1aRv-we_dHc8yl65Tc_11K59y9P-Uk_DS", "1J7-uu1K9JoidhjbSkMB_oBOpF3m33bOE", "17ieJ-5PNm0bzCQY2ntRZ5eolBSrT7x9n"]], ["TOMINAGA", ["1x5O87_tdR4gue0I1m4iyye_MF4DbrjvG"]], ["topwar", ["1uL1i8dzeYEZVE-lAyqdKtVPXY5TW9RnT"]], ["U", ["109g8gDCxYVMX3PIKm0LoTKgCEBQaA6wy"]], ["UCC", ["11YsprZGk1d0RAUV0XodKlhyhKQvfDkJg"]], ["UFJ", ["1IjYiC1dQap6T9BIJw8SiybxSya7H6Uoz", "1ILrJEp0ixAu8YbWoGZ8EhD4P15d2uhQe"]], ["uniqlo", ["1bbusLA8FMMgII9iS_KQOlRMwd3kuna9W", "1e5IgilNXNAuxHYeYw1cb91LBJIkFIDRR"]], ["UNUBORE", ["1kYAIBqJQlt7UbbQZDHL4mU6Er1AfO8jv", "1DfK8HT2UpS446LdnaKVhvlxzjuvEbFjt"]], ["VeetMen", ["121GQTOXC2q78dzJjlNqYpCHy6ohUxO0O"]], ["vivid", ["13JqrG8Ojn8lZ3JYHHX-6trEUiaCQMv3x"]], ["YAMAN", ["16-gHLMWx-4ToNLXC2Aaw6orQpgy6THwe", "1sOADzGdkPPLDCVtEQGsQ62zxE1Swnah8", "119Ij1dZDwhLObzyM-JBZek-TKspBzog4"]], ["yamato", ["1hCqtbSnrj_TMLxZHXsBzM1VTjCJhugfF", "1gp9zHyHIg6x006yDZ9Tr_-BeRaESafrz"]], ["YKK", ["1t8nq3b4hFtaKgSgtJ-Si_fBFyqBWdNmb", "19C7kOLPbqNjJhHSM20aMX9uwJk49-iCi", "1_D57MT5IyNX5qo6C0hiJocH5tnJ2in62"]], ["YKKAP", ["1IvRqzlpHaqUrrt3PE_9J74KSJ4wRwe4d"]], ["yokohama", ["1sSjv1omCZkOfU_1tXNblCA9r8jGkN-Cz", "1R4GOGyuOxumgzp5TSNdR4xhAfiisLBUG", "1Gq5qIfc_3YGEz_-Z7AH3e67OCAGR-Gti"]], ["YOLU", ["1s71xH_G43hyd4azO6kTlLXdrdknGY9rx", "15ow7RcIlNc8pNPINIFBy48Bv1ueH1fD7"]], ["zasshikoukoku", ["1o3oL6oQxWiZjXNtogztZ6F04cTfnmHJ7"]], ["民間救急A1", ["1QXayVhpTIddHzrMOPb2LPNrkABy6S-1K", "1n5EOP_p-nqHrqGe8fXwFsT31cAeLyvhy", "1PKACXXJAnKkGf9RYSjsrZkpWN5Ddj6kt", "1H0CyoPBCaHLzT4JOZo8kjpiIoDPBeaFB"]]];
+    function T(id){return 'https://drive.google.com/thumbnail?id='+id+'&sz=';}
+    var gallery=document.getElementById('gallery');
+    W.forEach(function(g){
+      var d=document.createElement('div');
+      d.className='work-group';
+      d.dataset.category='advertising';
+      d.dataset.title=g[0];
+      d.dataset.images=g[1].map(function(id){return T(id)+'w1600'}).join(',');
+      var cnt=g[1].length;
+      d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-count'+(cnt===1?' single':'')+'">'+cnt+'</div>';
+      gallery.appendChild(d);
+    });
+
     // ===== LOADER =====
-    function hideLoader() {
-      const loader = document.querySelector('.loader');
-      if (loader) {
-        loader.classList.add('hidden');
-        loader.style.display = 'none';
-      }
-    }
-    // DOMContentLoaded + フォールバック
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => setTimeout(hideLoader, 800));
-    } else {
-      setTimeout(hideLoader, 800);
-    }
-    setTimeout(hideLoader, 3000);
+    function hideLoader(){var l=document.querySelector('.loader');if(l){l.classList.add('hidden');l.style.display='none';}}
+    if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(hideLoader,800)});}else{setTimeout(hideLoader,800);}
+    setTimeout(hideLoader,3000);
 
     // ===== HAMBURGER MENU =====
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navOverlay = document.querySelector('.nav-overlay');
-    menuToggle.addEventListener('click', () => {
-      menuToggle.classList.toggle('active');
-      navOverlay.classList.toggle('active');
-      document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : '';
-    });
-    document.querySelectorAll('.nav-list a').forEach(link => {
-      link.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
-        navOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-    });
+    var menuToggle=document.querySelector('.menu-toggle');
+    var navOverlay=document.querySelector('.nav-overlay');
+    menuToggle.addEventListener('click',function(){menuToggle.classList.toggle('active');navOverlay.classList.toggle('active');document.body.style.overflow=navOverlay.classList.contains('active')?'hidden':'';});
+    document.querySelectorAll('.nav-list a').forEach(function(link){link.addEventListener('click',function(){menuToggle.classList.remove('active');navOverlay.classList.remove('active');document.body.style.overflow='';});});
 
     // ===== FILTER =====
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const workGroups = document.querySelectorAll('.work-group');
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        workGroups.forEach(item => {
-          if (filter === 'all' || item.dataset.category === filter) {
-            item.classList.remove('hidden');
-          } else {
-            item.classList.add('hidden');
-          }
-        });
-      });
-    });
+    var filterBtns=document.querySelectorAll('.filter-btn');
+    var workGroups=document.querySelectorAll('.work-group');
+    filterBtns.forEach(function(btn){btn.addEventListener('click',function(){filterBtns.forEach(function(b){b.classList.remove('active')});btn.classList.add('active');var filter=btn.dataset.filter;workGroups.forEach(function(item){if(filter==='all'||item.dataset.category===filter){item.classList.remove('hidden')}else{item.classList.add('hidden')}});});});
 
     // ===== GROUP LIGHTBOX =====
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = lightbox.querySelector('.lightbox-main img');
-    const lightboxTitle = lightbox.querySelector('.lightbox-title');
-    const lightboxCounter = lightbox.querySelector('.lightbox-counter');
-    const lightboxThumbs = lightbox.querySelector('.lightbox-thumbs');
-    const prevBtn = lightbox.querySelector('.lightbox-prev');
-    const nextBtn = lightbox.querySelector('.lightbox-next');
+    var lightbox=document.getElementById('lightbox');
+    var lightboxImg=lightbox.querySelector('.lightbox-main img');
+    var lightboxTitle=lightbox.querySelector('.lightbox-title');
+    var lightboxCounter=lightbox.querySelector('.lightbox-counter');
+    var lightboxThumbs=lightbox.querySelector('.lightbox-thumbs');
+    var prevBtn=lightbox.querySelector('.lightbox-prev');
+    var nextBtn=lightbox.querySelector('.lightbox-next');
+    var currentGroupImages=[];
+    var currentImageIndex=0;
 
-    let currentGroupImages = [];
-    let currentImageIndex = 0;
-
-    function openLightbox(group) {
-      const title = group.dataset.title;
-      const images = group.dataset.images.split(',');
-      currentGroupImages = images;
-      currentImageIndex = 0;
-
-      lightboxTitle.textContent = title;
-      updateLightboxImage();
-      buildThumbnails(images);
-
-      if (images.length <= 1) {
-        lightboxThumbs.classList.add('single-image');
-      } else {
-        lightboxThumbs.classList.remove('single-image');
-      }
-
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
+    function openLightbox(group){
+      var title=group.dataset.title;
+      var images=group.dataset.images.split(',');
+      currentGroupImages=images;currentImageIndex=0;
+      lightboxTitle.textContent=title;updateLightboxImage();buildThumbnails(images);
+      if(images.length<=1){lightboxThumbs.classList.add('single-image')}else{lightboxThumbs.classList.remove('single-image')}
+      lightbox.classList.add('active');document.body.style.overflow='hidden';
     }
-
-    function updateLightboxImage() {
-      lightboxImg.style.opacity = '0';
-      setTimeout(() => {
-        lightboxImg.src = currentGroupImages[currentImageIndex];
-        lightboxImg.style.opacity = '1';
-      }, 150);
-
-      const total = currentGroupImages.length;
-      lightboxCounter.textContent = total > 1 ? `${currentImageIndex + 1} / ${total}` : '';
-
-      // update nav buttons
-      prevBtn.classList.toggle('disabled', currentImageIndex === 0);
-      nextBtn.classList.toggle('disabled', currentImageIndex === total - 1);
-
-      // update thumb active state
-      lightboxThumbs.querySelectorAll('.lightbox-thumb').forEach((thumb, i) => {
-        thumb.classList.toggle('active', i === currentImageIndex);
-      });
+    function updateLightboxImage(){
+      lightboxImg.style.opacity='0';
+      setTimeout(function(){lightboxImg.src=currentGroupImages[currentImageIndex];lightboxImg.style.opacity='1';},150);
+      var total=currentGroupImages.length;
+      lightboxCounter.textContent=total>1?(currentImageIndex+1)+' / '+total:'';
+      prevBtn.classList.toggle('disabled',currentImageIndex===0);
+      nextBtn.classList.toggle('disabled',currentImageIndex===total-1);
+      lightboxThumbs.querySelectorAll('.lightbox-thumb').forEach(function(thumb,i){thumb.classList.toggle('active',i===currentImageIndex)});
     }
-
-    function buildThumbnails(images) {
-      lightboxThumbs.innerHTML = '';
-      images.forEach((src, i) => {
-        const thumb = document.createElement('img');
-        thumb.className = 'lightbox-thumb' + (i === 0 ? ' active' : '');
-        thumb.src = src.replace('w2000', 'w200');
-        thumb.alt = '';
-        thumb.addEventListener('click', (e) => {
-          e.stopPropagation();
-          currentImageIndex = i;
-          updateLightboxImage();
-        });
+    function buildThumbnails(images){
+      lightboxThumbs.innerHTML='';
+      images.forEach(function(src,i){
+        var thumb=document.createElement('img');
+        thumb.className='lightbox-thumb'+(i===0?' active':'');
+        thumb.src=src.replace('w1600','w200');thumb.alt='';
+        thumb.addEventListener('click',function(e){e.stopPropagation();currentImageIndex=i;updateLightboxImage();});
         lightboxThumbs.appendChild(thumb);
       });
     }
+    function closeLightbox(){lightbox.classList.remove('active');document.body.style.overflow='';}
 
-    function closeLightbox() {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    // attach click to each group card
-    workGroups.forEach(group => {
-      group.addEventListener('click', () => openLightbox(group));
-    });
-
-    lightbox.querySelector('.lightbox-close').addEventListener('click', (e) => {
-      e.stopPropagation();
-      closeLightbox();
-    });
-
-    lightbox.querySelector('.lightbox-main').addEventListener('click', (e) => {
-      if (e.target === e.currentTarget) closeLightbox();
-    });
-
-    prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (currentImageIndex > 0) {
-        currentImageIndex--;
-        updateLightboxImage();
-      }
-    });
-
-    nextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (currentImageIndex < currentGroupImages.length - 1) {
-        currentImageIndex++;
-        updateLightboxImage();
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('active')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft' && currentImageIndex > 0) {
-        currentImageIndex--;
-        updateLightboxImage();
-      }
-      if (e.key === 'ArrowRight' && currentImageIndex < currentGroupImages.length - 1) {
-        currentImageIndex++;
-        updateLightboxImage();
-      }
-    });
+    document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
+    lightbox.querySelector('.lightbox-close').addEventListener('click',function(e){e.stopPropagation();closeLightbox()});
+    lightbox.querySelector('.lightbox-main').addEventListener('click',function(e){if(e.target===e.currentTarget)closeLightbox()});
+    prevBtn.addEventListener('click',function(e){e.stopPropagation();if(currentImageIndex>0){currentImageIndex--;updateLightboxImage();}});
+    nextBtn.addEventListener('click',function(e){e.stopPropagation();if(currentImageIndex<currentGroupImages.length-1){currentImageIndex++;updateLightboxImage();}});
+    document.addEventListener('keydown',function(e){if(!lightbox.classList.contains('active'))return;if(e.key==='Escape')closeLightbox();if(e.key==='ArrowLeft'&&currentImageIndex>0){currentImageIndex--;updateLightboxImage();}if(e.key==='ArrowRight'&&currentImageIndex<currentGroupImages.length-1){currentImageIndex++;updateLightboxImage();}});
 
     // ===== SCROLL REVEAL =====
-    function revealCheck() {
-      document.querySelectorAll('.reveal:not(.active), .work-group:not(.visible)').forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.9) {
-          el.classList.add(el.classList.contains('work-group') ? 'visible' : 'active');
-        }
-      });
-    }
-    try {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(entry.target.classList.contains('work-group') ? 'visible' : 'active');
-          }
-        });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.reveal, .work-group').forEach(el => observer.observe(el));
-    } catch(e) {}
-    // フォールバック: scroll + 初期チェック
-    window.addEventListener('scroll', revealCheck, { passive: true });
-    revealCheck();
+    function revealCheck(){document.querySelectorAll('.reveal:not(.active), .work-group:not(.visible)').forEach(function(el){var rect=el.getBoundingClientRect();if(rect.top<window.innerHeight*0.9){el.classList.add(el.classList.contains('work-group')?'visible':'active');}});}
+    try{var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add(entry.target.classList.contains('work-group')?'visible':'active');}});},{threshold:0.1});document.querySelectorAll('.reveal, .work-group').forEach(function(el){observer.observe(el)});}catch(e){}
+    window.addEventListener('scroll',revealCheck,{passive:true});revealCheck();
 
     // ===== FORM =====
-    function handleSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const name = form.name.value;
-      const email = form.email.value;
-      const company = form.company.value;
-      const message = form.message.value;
-      const subject = encodeURIComponent('お問い合わせ: ' + name + (company ? ' / ' + company : ''));
-      const body = encodeURIComponent('名前: ' + name + '\nメール: ' + email + '\n会社: ' + company + '\n\n' + message);
-      window.location.href = 'mailto:nao.kurishita@gmail.com?subject=' + subject + '&body=' + body;
-    }
+    function handleSubmit(e){e.preventDefault();var f=e.target;var name=f.name.value;var email=f.email.value;var company=f.company.value;var message=f.message.value;var subject=encodeURIComponent('お問い合わせ: '+name+(company?' / '+company:''));var body=encodeURIComponent('名前: '+name+'\nメール: '+email+'\n会社: '+company+'\n\n'+message);window.location.href='mailto:nao.kurishita@gmail.com?subject='+subject+'&body='+body;}
   </script>
 </body>
 </html>
