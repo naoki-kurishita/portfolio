@@ -58,9 +58,15 @@
     .filter-btn { background: none; border: 1px solid var(--border); padding: 0.5rem 1.5rem; font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.15em; cursor: pointer; transition: var(--transition); color: var(--text-light); }
     .filter-btn.active, .filter-btn:hover { background: var(--text); color: #fff; border-color: var(--text); }
 
+<<<<<<< HEAD
     .masonry { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     @media (max-width: 1024px) { .masonry { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 600px) { .masonry { grid-template-columns: 1fr; } }
+=======
+    .masonry { columns: 3; column-gap: 1.5rem; }
+    @media (max-width: 1024px) { .masonry { columns: 2; } }
+    @media (max-width: 600px) { .masonry { columns: 1; } }
+>>>>>>> d7da950b9827733d8acf97618807dcbdcb2cd856
 
     .work-group { break-inside: avoid; margin-bottom: 1.5rem; position: relative; overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .work-group.visible { opacity: 1; transform: translateY(0); }
