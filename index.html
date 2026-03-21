@@ -107,11 +107,13 @@
     .stat-number { font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; }
     .stat-label { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--text-light); text-transform: uppercase; margin-top: 0.3rem; }
 
-    .career-timeline { max-width: 700px; }
-    .career-item { display: flex; gap: 3rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
-    .career-year { font-family: var(--font-display); font-size: 1.2rem; min-width: 80px; color: var(--text-light); font-weight: 400; }
-    .career-desc h3 { font-size: 1rem; font-weight: 400; margin-bottom: 0.5rem; }
-    .career-desc p { font-size: 0.85rem; color: var(--text-light); }
+    .access-content { max-width: 800px; }
+    .access-info { margin-bottom: 3rem; }
+    .access-address { font-size: 0.95rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .access-tel { font-size: 0.85rem; color: var(--text-light); margin-bottom: 1.2rem; letter-spacing: 0.03em; }
+    .access-station { font-size: 0.85rem; color: var(--text-light); line-height: 1.9; }
+    .access-map { width: 100%; border: 1px solid var(--border); background: #fff; }
+    .access-map object { display: block; border: none; }
 
     .contact-content { max-width: 600px; }
     .contact-content > p { margin-bottom: 3rem; color: var(--text-light); }
@@ -135,7 +137,7 @@
     @media (max-width: 768px) {
       section { padding: 5rem 6vw; }
       .about-stats { gap: 2rem; }
-      .career-item { flex-direction: column; gap: 0.5rem; }
+      .access-map object { height: 450px; }
       .lightbox-main img { max-width: 95%; max-height: 60vh; }
       .lightbox-thumbs { padding: 0.5rem 1rem 1rem; }
     }
@@ -151,7 +153,7 @@
     <ul class="nav-list">
       <li><a href="#works" style="--i:0">Works</a></li>
       <li><a href="#about" style="--i:1">About</a></li>
-      <li><a href="#career" style="--i:2">Career</a></li>
+      <li><a href="#access" style="--i:2">Access</a></li>
       <li><a href="#contact" style="--i:3">Contact</a></li>
     </ul>
   </nav>
@@ -177,12 +179,18 @@
       <p>クライアントのビジョンを深く理解し、細部にまでこだわった<br>ハイエンドなビジュアル表現を追求します。</p>
     </div>
   </section>
-  <section id="career">
-    <h2 class="section-label reveal">Career</h2>
+  <section id="access">
+    <h2 class="section-label reveal">Access</h2>
     <div class="section-line reveal"></div>
-    <div class="career-timeline">
-      <div class="career-item reveal"><div class="career-year">現在</div><div class="career-desc"><h3>フリーランス レタッチャー</h3><p>広告、ファッション、コーポレートなど幅広いジャンルのレタッチを手がける。</p></div></div>
-      <div class="career-item reveal"><div class="career-year">主な実縞</div><div class="career-desc"><h3>広告 / コーポレート</h3><p>ECC、ORIHICA、東急グループ、民間救急キャプテン、NutS ほか多数</p></div></div>
+    <div class="access-content reveal">
+      <div class="access-info">
+        <p class="access-address">〒105-0004 東京都港区新橋2-12-17 新橋I-Nビル7F</p>
+        <p class="access-tel">tel. 03-3507-0735 / fax. 03-5532-8958</p>
+        <p class="access-station">JR新橋駅、浅草線新橋駅、銀座線新橋駅 より徒歩6分<br>三田線内幸町駅A1出口 より徒歩1分</p>
+      </div>
+      <div class="access-map">
+        <object data="map_260225.pdf" type="application/pdf" width="100%" height="600"><p>アクセスマップ（<a href="map_260225.pdf" target="_blank">PDFを表示</a>）</p></object>
+      </div>
     </div>
   </section>
   <section id="contact">
