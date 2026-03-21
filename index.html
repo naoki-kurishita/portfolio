@@ -239,9 +239,12 @@
     function T(id){return 'https://lh3.googleusercontent.com/d/'+id+'=';}
     var gallery=document.getElementById('gallery');
     function getColCount(){if(window.innerWidth<=600)return 1;if(window.innerWidth<=1024)return 2;return 3;}
-    function buildGallery(){
-      gallery.innerHTML='';
+    var lastColCount=0;
+    function buildGallery(force){
       var cols=getColCount();
+      if(!force&&cols===lastColCount)return;
+      lastColCount=cols;
+      gallery.innerHTML='';
       var colEls=[];
       for(var c=0;c<cols;c++){var col=document.createElement('div');col.className='masonry-col';colEls.push(col);gallery.appendChild(col);}
       W.forEach(function(g,i){
