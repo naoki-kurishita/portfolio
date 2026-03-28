@@ -267,6 +267,9 @@
     // buildGallery is called after all functions are defined below
 
     // ===== LOADER =====
+    // ===== RELOAD TO TOP =====
+    if(window.location.hash){history.replaceState(null,null,' ');} window.scrollTo(0,0);
+
     function hideLoader(){var l=document.querySelector('.loader');if(l){l.classList.add('hidden');l.style.display='none';}var hn=document.querySelector('.hero-name');if(hn)hn.classList.add('loaded');var ht=document.querySelector('.hero-title');if(ht)ht.classList.add('visible');var si=document.querySelector('.scroll-indicator');if(si)si.classList.add('visible');}
     if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(hideLoader,800)});}else{setTimeout(hideLoader,800);}
     setTimeout(hideLoader,3000);
