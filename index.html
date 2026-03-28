@@ -282,9 +282,17 @@
           if(!last)return 0;
           return last.offsetTop+last.offsetHeight;
         }
+        var trimDone=false;
         function trimBottom(){
+          if(trimDone)return;
+          // 読み込み済み画像数チェック
+          var imgs=gallery.querySelectorAll('.work-group img');
+          var loaded=0;
+          imgs.forEach(function(img){if(img.complete&&img.naturalHeight>0)loaded++;});
+          if(loaded<30){console.log('trimBottom skip: loaded='+loaded);return;}
+          trimDone=true;
           var heights=colEls.map(contentH);
-          console.log('trimBottom heights='+heights.join(','));
+          console.log('trimBottom heights='+heights.join(',')+' loaded='+loaded);
           for(var t=0;t<10;t++){
             var tallest=0,shortest=0;
             for(var c=1;c<colEls.length;c++){
@@ -297,13 +305,18 @@
             if(!last)break;
             colEls[tallest].removeChild(last);
             colEls[shortest].appendChild(last);
-            console.log('  moved from col'+tallest+' to col'+shortest+' diff='+diff);
           }
           rebind();
         }
-        setTimeout(trimBottom,3000);
-        setTimeout(trimBottom,6000);
-        setTimeout(trimBottom,10000);
+        // 画像のloadイベントで発火
+        var imgEls=gallery.querySelectorAll('.work-group img');
+        imgEls.forEach(function(img){
+          if(img.complete&&img.naturalHeight>0){/*already*/}
+          else{img.addEventListener('load',function(){setTimeout(trimBottom,500);});}
+        });
+        // フォールバック
+        setTimeout(trimBottom,8000);
+        setTimeout(trimBottom,15000);
       }
       function rebind(){
         document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
