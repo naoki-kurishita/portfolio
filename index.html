@@ -275,12 +275,37 @@
         d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
         colEls[i%cols].appendChild(d);
       });
-      // re-bind click events
-      document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
-      // re-observe for scroll reveal
-      revealCheck();
-      try{document.querySelectorAll('.work-group').forEach(function(el){observer.observe(el)});}catch(e){}
-      workGroups=document.querySelectorAll('.work-group');
+      // 画像読み込み後、末尾アイテムを短い列へ移動して下段の偏りを軽減
+      if(cols>1){
+        var trimDone=false;
+        function trimBottom(){
+          if(trimDone)return;trimDone=true;
+          // 最も高い列から最も低い列へ末尾アイテムを移動（最大5回）
+          for(var t=0;t<5;t++){
+            var tallest=0,shortest=0;
+            for(var c=1;c<colEls.length;c++){
+              if(colEls[c].offsetHeight>colEls[tallest].offsetHeight)tallest=c;
+              if(colEls[c].offsetHeight<colEls[shortest].offsetHeight)shortest=c;
+            }
+            var diff=colEls[tallest].offsetHeight-colEls[shortest].offsetHeight;
+            if(diff<200||tallest===shortest)break;
+            var last=colEls[tallest].lastElementChild;
+            if(!last)break;
+            colEls[tallest].removeChild(last);
+            colEls[shortest].appendChild(last);
+          }
+          rebind();
+        }
+        setTimeout(trimBottom,4000);
+        setTimeout(trimBottom,8000);
+      }
+      function rebind(){
+        document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
+        revealCheck();
+        try{document.querySelectorAll('.work-group').forEach(function(el){observer.observe(el)});}catch(e){}
+        workGroups=document.querySelectorAll('.work-group');
+      }
+      rebind();
     }
     // buildGallery is called after all functions are defined below
 
