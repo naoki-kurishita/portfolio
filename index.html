@@ -265,6 +265,7 @@
       var colEls=[];
       for(var c=0;c<cols;c++){var col=document.createElement('div');col.className='masonry-col';colEls.push(col);gallery.appendChild(col);}
       // ラウンドロビン: 行順に配置（1行目最新→2行目→...）
+      var items=[];
       W.forEach(function(g,i){
         var d=document.createElement('div');
         d.className='work-group';
@@ -273,12 +274,43 @@
         d.dataset.images=g[1].map(function(id){return T(id)+'w1600'}).join(',');
         var cnt=g[1].length;
         d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
+        items.push(d);
         colEls[i%cols].appendChild(d);
       });
       document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
       revealCheck();
       try{document.querySelectorAll('.work-group').forEach(function(el){observer.observe(el)});}catch(e){}
       workGroups=document.querySelectorAll('.work-group');
+
+      // 画像読み込み後にカラム高さを均等化（Isotope方式: 最短カラムに配置）
+      var allImgs=gallery.querySelectorAll('img');
+      var loaded=0;
+      var total=allImgs.length;
+      function rebalance(){
+        if(cols<=1)return;
+        var colHeights=[];
+        for(var c=0;c<cols;c++)colHeights.push(0);
+        // 全アイテムを取り出し、最短カラムに順番に配置
+        var allItems=[];
+        colEls.forEach(function(col){
+          while(col.firstChild)allItems.push(col.removeChild(col.firstChild));
+        });
+        allItems.forEach(function(item){
+          var shortest=0;
+          for(var c=1;c<cols;c++){if(colHeights[c]<colHeights[shortest])shortest=c;}
+          colEls[shortest].appendChild(item);
+          colHeights[shortest]+=item.offsetHeight+24;
+        });
+      }
+      function onImgLoad(){
+        loaded++;
+        if(loaded>=total)rebalance();
+      }
+      allImgs.forEach(function(img){
+        if(img.complete)loaded++;
+        else{img.addEventListener('load',onImgLoad);img.addEventListener('error',onImgLoad);}
+      });
+      if(loaded>=total)rebalance();
     }
     // buildGallery is called after all functions are defined below
 
