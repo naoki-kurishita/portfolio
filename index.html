@@ -277,25 +277,28 @@
       });
       // 画像読み込み後、末尾アイテムを短い列へ移動して下段の偏りを軽減
       if(cols>1){
-        var trimCount=0;
+        function contentH(col){
+          var last=col.lastElementChild;
+          if(!last)return 0;
+          return last.offsetTop+last.offsetHeight;
+        }
         function trimBottom(){
-          var heights=colEls.map(function(c){return c.offsetHeight;});
-          console.log('trimBottom run#'+(trimCount+1)+' heights='+heights.join(','));
+          var heights=colEls.map(contentH);
+          console.log('trimBottom heights='+heights.join(','));
           for(var t=0;t<10;t++){
             var tallest=0,shortest=0;
             for(var c=1;c<colEls.length;c++){
-              if(colEls[c].offsetHeight>colEls[tallest].offsetHeight)tallest=c;
-              if(colEls[c].offsetHeight<colEls[shortest].offsetHeight)shortest=c;
+              if(contentH(colEls[c])>contentH(colEls[tallest]))tallest=c;
+              if(contentH(colEls[c])<contentH(colEls[shortest]))shortest=c;
             }
-            var diff=colEls[tallest].offsetHeight-colEls[shortest].offsetHeight;
+            var diff=contentH(colEls[tallest])-contentH(colEls[shortest]);
             if(diff<100||tallest===shortest)break;
             var last=colEls[tallest].lastElementChild;
             if(!last)break;
             colEls[tallest].removeChild(last);
             colEls[shortest].appendChild(last);
-            console.log('  moved from col'+tallest+' to col'+shortest+' diff was '+diff);
+            console.log('  moved from col'+tallest+' to col'+shortest+' diff='+diff);
           }
-          trimCount++;
           rebind();
         }
         setTimeout(trimBottom,3000);
