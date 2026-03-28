@@ -275,26 +275,6 @@
         d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
         colEls[i%cols].appendChild(d);
       });
-      // 画像読み込み後に高さで再配置して下段を均等にする
-      function rebalance(){
-        if(cols<=1)return;
-        var items=[];
-        colEls.forEach(function(col){while(col.firstChild)items.push(col.removeChild(col.firstChild));});
-        colEls.forEach(function(col){col.style.minHeight='0';});
-        // 最短列に順番に追加
-        items.forEach(function(item){
-          var shortest=0;
-          for(var c=1;c<colEls.length;c++){
-            if(colEls[c].offsetHeight<colEls[shortest].offsetHeight)shortest=c;
-          }
-          colEls[shortest].appendChild(item);
-        });
-      }
-      var imgs=gallery.querySelectorAll('.work-group img');
-      var loaded=0;var total=imgs.length;
-      function onImg(){loaded++;if(loaded>=Math.min(total,20))rebalance();}
-      imgs.forEach(function(img){if(img.complete)onImg();else img.addEventListener('load',onImg);img.addEventListener('error',onImg);});
-      setTimeout(rebalance,3000);
       // re-bind click events
       document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
       // re-observe for scroll reveal
