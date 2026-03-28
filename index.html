@@ -41,7 +41,16 @@
 
     .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; background: var(--bg); }
     .hero-name { font-family: var(--font-display); font-size: clamp(3rem, 10vw, 10rem); font-weight: 300; letter-spacing: 0.15em; line-height: 1; color: var(--text); position: relative; z-index: 10000; display: inline-block; }
-    .hero-name span { display: inline-block; opacity: 0; transform: translateY(-50px); animation: letterDrop 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; animation-delay: calc(var(--i) * 0.15s); }
+    .hero-name span { display: inline-block; opacity: 0; transform: translateY(-50px); animation: letterDrop 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+    .hero-name span:nth-child(1) { animation-delay: 0s; }
+    .hero-name span:nth-child(2) { animation-delay: 0.4s; }
+    .hero-name span:nth-child(3) { animation-delay: 0.75s; }
+    .hero-name span:nth-child(4) { animation-delay: 1.05s; }
+    .hero-name span:nth-child(5) { animation-delay: 1.3s; }
+    .hero-name span:nth-child(6) { animation-delay: 1.5s; }
+    .hero-name span:nth-child(7) { animation-delay: 1.65s; }
+    .hero-name span:nth-child(8) { animation-delay: 1.78s; }
+    .hero-name span:nth-child(9) { animation-delay: 1.9s; }
     @keyframes letterDrop { 0% { opacity: 0; transform: translateY(-50px); } 100% { opacity: 1; transform: translateY(0); } }
     .hero-name.loaded span { animation: none; opacity: 1; transform: translateY(0); }
     .hero-title { font-size: clamp(0.7rem, 1.5vw, 1rem); letter-spacing: 0.5em; text-transform: uppercase; color: var(--text-light); margin-top: 1.5rem; font-weight: 300; opacity: 0; transition: opacity 0.8s ease 0.2s; }
