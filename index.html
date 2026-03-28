@@ -40,7 +40,8 @@
     .nav-list a:hover { color: var(--accent); }
 
     .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; background: var(--bg); }
-    .hero-name { font-family: var(--font-display); font-size: clamp(3rem, 10vw, 10rem); font-weight: 300; letter-spacing: 0.15em; line-height: 1; color: var(--text); position: relative; z-index: 10000; animation: loaderPulse 1.5s ease-in-out infinite; }
+    .hero-name { font-family: var(--font-display); font-size: clamp(3rem, 10vw, 10rem); font-weight: 300; letter-spacing: 0.15em; line-height: 1; color: var(--text); position: relative; z-index: 10000; opacity: 0; animation: heroFadeIn 3s ease-in-out forwards; }
+    @keyframes heroFadeIn { 0% { opacity: 0; letter-spacing: 0.4em; } 50% { opacity: 1; } 100% { opacity: 1; letter-spacing: 0.15em; } }
     .hero-name.loaded { animation: none; }
     .hero-title { font-size: clamp(0.7rem, 1.5vw, 1rem); letter-spacing: 0.5em; text-transform: uppercase; color: var(--text-light); margin-top: 1.5rem; font-weight: 300; opacity: 0; transition: opacity 0.8s ease 0.2s; }
     .hero-title.visible { opacity: 1; }
@@ -271,8 +272,8 @@
     if(window.location.hash){history.replaceState(null,null,' ');} window.scrollTo(0,0);
 
     function hideLoader(){var l=document.querySelector('.loader');if(l){l.classList.add('hidden');l.style.display='none';}var hn=document.querySelector('.hero-name');if(hn)hn.classList.add('loaded');var ht=document.querySelector('.hero-title');if(ht)ht.classList.add('visible');var si=document.querySelector('.scroll-indicator');if(si)si.classList.add('visible');}
-    if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(hideLoader,800)});}else{setTimeout(hideLoader,800);}
-    setTimeout(hideLoader,3000);
+    if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(hideLoader,2000)});}else{setTimeout(hideLoader,2000);}
+    setTimeout(hideLoader,4000);
 
     // ===== HAMBURGER MENU =====
     var menuToggle=document.querySelector('.menu-toggle');
