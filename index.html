@@ -42,7 +42,7 @@
     .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; background: var(--bg); }
     .hero-name { font-family: var(--font-display); font-size: clamp(3rem, 10vw, 10rem); font-weight: 300; letter-spacing: 0.15em; line-height: 1; color: var(--text); position: relative; z-index: 10000; opacity: 0; animation: heroFadeIn 3s ease-in-out forwards; }
     @keyframes heroFadeIn { 0% { opacity: 0; letter-spacing: 0.4em; } 50% { opacity: 1; } 100% { opacity: 1; letter-spacing: 0.15em; } }
-    .hero-name.loaded { animation: none; }
+    .hero-name.loaded { animation: none; opacity: 1; }
     .hero-title { font-size: clamp(0.7rem, 1.5vw, 1rem); letter-spacing: 0.5em; text-transform: uppercase; color: var(--text-light); margin-top: 1.5rem; font-weight: 300; opacity: 0; transition: opacity 0.8s ease 0.2s; }
     .hero-title.visible { opacity: 1; }
     .scroll-indicator { position: absolute; bottom: 3rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; opacity: 0; transition: opacity 0.8s ease 0.4s; }
