@@ -70,11 +70,10 @@
     .filter-btn { background: none; border: 1px solid var(--border); padding: 0.5rem 1.5rem; font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.15em; cursor: pointer; transition: var(--transition); color: var(--text-light); }
     .filter-btn.active, .filter-btn:hover { background: var(--text); color: #fff; border-color: var(--text); }
 
-    .masonry { column-count: 3; column-gap: 1.5rem; }
-    .masonry .work-group { break-inside: avoid; margin-bottom: 1.5rem; }
-    .masonry .col-break { break-before: column; }
-    @media (max-width: 1024px) { .masonry { column-count: 2; column-gap: 1.2rem; } .masonry .work-group { margin-bottom: 1.2rem; } }
-    @media (max-width: 600px) { .masonry { column-count: 1; column-gap: 1rem; } .masonry .work-group { margin-bottom: 1rem; } }
+    .masonry { display: flex; gap: 1.5rem; }
+    .masonry-col { flex: 1; display: flex; flex-direction: column; gap: 1.5rem; }
+    @media (max-width: 1024px) { .masonry { gap: 1.2rem; } .masonry-col { gap: 1.2rem; } }
+    @media (max-width: 600px) { .masonry { flex-direction: column; gap: 1rem; } .masonry-col { gap: 1rem; } }
 
     .work-group { position: relative; overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .work-group.visible { opacity: 1; transform: translateY(0); }
@@ -263,8 +262,10 @@
       if(cols===lastColCount)return;
       lastColCount=cols;
       gallery.innerHTML='';
-      // work-group要素を作成
-      var items=W.map(function(g){
+      var colEls=[];
+      for(var c=0;c<cols;c++){var col=document.createElement('div');col.className='masonry-col';colEls.push(col);gallery.appendChild(col);}
+      // ラウンドロビン: 行順に配置（1行目最新→2行目→...）
+      W.forEach(function(g,i){
         var d=document.createElement('div');
         d.className='work-group';
         d.dataset.category='advertising';
@@ -272,18 +273,8 @@
         d.dataset.images=g[1].map(function(id){return T(id)+'w1600'}).join(',');
         var cnt=g[1].length;
         d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
-        return d;
+        colEls[i%cols].appendChild(d);
       });
-      // 行順→列順に並び替えてDOMに追加 + 列の先頭にbreak-before:column
-      // col0: items[0],items[3],items[6]... col1: items[1],items[4],items[7]... col2: items[2],items[5],items[8]...
-      for(var c=0;c<cols;c++){
-        var first=true;
-        for(var i=c;i<items.length;i+=cols){
-          if(first&&c>0)items[i].classList.add('col-break');
-          first=false;
-          gallery.appendChild(items[i]);
-        }
-      }
       document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
       revealCheck();
       try{document.querySelectorAll('.work-group').forEach(function(el){observer.observe(el)});}catch(e){}
