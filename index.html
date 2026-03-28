@@ -270,8 +270,7 @@
         d.dataset.images=g[1].map(function(id){return T(id)+'w1600'}).join(',');
         var cnt=g[1].length;
         d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
-        var shortest=0;for(var c=1;c<cols;c++){if(colEls[c].children.length<colEls[shortest].children.length)shortest=c;}
-        colEls[shortest].appendChild(d);
+        colEls[i%cols].appendChild(d);
       });
       // re-bind click events
       document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
