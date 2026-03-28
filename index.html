@@ -284,6 +284,7 @@
     function hideLoader(){var l=document.querySelector('.loader');if(l){l.classList.add('hidden');l.style.display='none';}var hn=document.querySelector('.hero-name');if(hn)hn.classList.add('loaded');var ht=document.querySelector('.hero-title');if(ht)ht.classList.add('visible');var si=document.querySelector('.scroll-indicator');if(si)si.classList.add('visible');}
     if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(hideLoader,8500)});}else{setTimeout(hideLoader,8500);}
     setTimeout(hideLoader,10000);
+    window.addEventListener('scroll',function onScrollSkip(){hideLoader();window.removeEventListener('scroll',onScrollSkip);},{passive:true});
 
     // ===== HAMBURGER MENU =====
     var menuToggle=document.querySelector('.menu-toggle');
