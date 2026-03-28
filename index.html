@@ -264,7 +264,7 @@
       gallery.innerHTML='';
       var colEls=[];
       for(var c=0;c<cols;c++){var col=document.createElement('div');col.className='masonry-col';colEls.push(col);gallery.appendChild(col);}
-      // ラウンドロビンで初期配置
+      // ラウンドロビンで配置
       W.forEach(function(g,i){
         var d=document.createElement('div');
         d.className='work-group';
@@ -275,42 +275,10 @@
         d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
         colEls[i%cols].appendChild(d);
       });
-      // キャッシュ済み（リロード時）のみ末尾調整
-      if(cols>1){
-        var imgEls=gallery.querySelectorAll('.work-group img');
-        var cached=0;
-        imgEls.forEach(function(img){if(img.complete&&img.naturalHeight>0)cached++;});
-        if(cached>50){
-          function contentH(col){
-            var last=col.lastElementChild;
-            if(!last)return 0;
-            return last.offsetTop+last.offsetHeight;
-          }
-          setTimeout(function(){
-            for(var t=0;t<10;t++){
-              var tallest=0,shortest=0;
-              for(var c=1;c<colEls.length;c++){
-                if(contentH(colEls[c])>contentH(colEls[tallest]))tallest=c;
-                if(contentH(colEls[c])<contentH(colEls[shortest]))shortest=c;
-              }
-              var diff=contentH(colEls[tallest])-contentH(colEls[shortest]);
-              if(diff<100||tallest===shortest)break;
-              var last=colEls[tallest].lastElementChild;
-              if(!last)break;
-              colEls[tallest].removeChild(last);
-              colEls[shortest].appendChild(last);
-            }
-            rebind();
-          },500);
-        }
-      }
-      function rebind(){
-        document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
-        revealCheck();
-        try{document.querySelectorAll('.work-group').forEach(function(el){observer.observe(el)});}catch(e){}
-        workGroups=document.querySelectorAll('.work-group');
-      }
-      rebind();
+      document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
+      revealCheck();
+      try{document.querySelectorAll('.work-group').forEach(function(el){observer.observe(el)});}catch(e){}
+      workGroups=document.querySelectorAll('.work-group');
     }
     // buildGallery is called after all functions are defined below
 
