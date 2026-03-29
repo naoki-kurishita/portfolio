@@ -264,9 +264,13 @@
       lastColCount=cols;
       gallery.innerHTML='';
       gallery.classList.add('loading');
-      var colEls=[];
-      for(var c=0;c<cols;c++){var col=document.createElement('div');col.className='masonry-col';colEls.push(col);gallery.appendChild(col);}
-      // アイテムDOM作成（まだカラムに配置しない）
+
+      // 画面外の非表示コンテナで画像を読み込み・計測する
+      var offscreen=document.createElement('div');
+      offscreen.style.cssText='position:absolute;left:-9999px;top:0;width:'+Math.floor(gallery.offsetWidth/cols)+'px;visibility:hidden;';
+      document.body.appendChild(offscreen);
+
+      // アイテムDOM作成
       var items=[];
       W.forEach(function(g){
         var d=document.createElement('div');
@@ -277,45 +281,39 @@
         var cnt=g[1].length;
         d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
         items.push(d);
+        offscreen.appendChild(d);
       });
-      // 非表示の計測用カラムに全アイテムを入れて画像読み込みを開始
-      // 最初の1列に全て入れて高さ計測用にする
-      items.forEach(function(d){colEls[0].appendChild(d);});
 
-      var allImgs=gallery.querySelectorAll('img');
+      var allImgs=offscreen.querySelectorAll('img');
       var loaded=0;
       var total=allImgs.length;
+      var placed=false;
 
       function placeItems(){
+        if(placed)return;
+        placed=true;
+        // カラム作成
+        var colEls=[];
+        for(var c=0;c<cols;c++){var col=document.createElement('div');col.className='masonry-col';colEls.push(col);gallery.appendChild(col);}
         if(cols<=1){
-          // 1カラム時はそのまま
-          gallery.classList.remove('loading');
-          finishGallery();
-          return;
+          items.forEach(function(d){colEls[0].appendChild(d);});
+        }else{
+          // Isotope方式: 各アイテムを最短カラムに順番に配置
+          var colHeights=[];
+          for(var c=0;c<cols;c++)colHeights.push(0);
+          items.forEach(function(item){
+            var shortest=0;
+            for(var c=1;c<cols;c++){if(colHeights[c]<colHeights[shortest])shortest=c;}
+            colEls[shortest].appendChild(item);
+            var img=item.querySelector('img');
+            var h=img?img.offsetHeight:item.offsetHeight;
+            colHeights[shortest]+=h+24;
+          });
         }
-        // 全アイテムを取り出す
-        var all=[];
-        colEls.forEach(function(col){
-          while(col.firstChild)all.push(col.removeChild(col.firstChild));
-        });
-        // Isotope方式: 各アイテムを最短カラムに順番に配置
-        var colHeights=[];
-        for(var c=0;c<cols;c++)colHeights.push(0);
-        all.forEach(function(item){
-          // 最短カラムを探す（同じ高さなら左を優先）
-          var shortest=0;
-          for(var c=1;c<cols;c++){if(colHeights[c]<colHeights[shortest])shortest=c;}
-          colEls[shortest].appendChild(item);
-          // 高さ計測: img実際の表示高さ + overlay等
-          var img=item.querySelector('img');
-          var h=img?img.offsetHeight:item.offsetHeight;
-          colHeights[shortest]+=h+24;
-        });
+        // 非表示コンテナ削除
+        document.body.removeChild(offscreen);
         gallery.classList.remove('loading');
-        finishGallery();
-      }
-
-      function finishGallery(){
+        // イベント等セットアップ
         document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
         revealCheck();
         try{document.querySelectorAll('.work-group').forEach(function(el){observer.observe(el)});}catch(e){}
@@ -332,7 +330,7 @@
       });
       if(loaded>=total)placeItems();
       // フォールバック: 10秒後にまだ配置されていなければ強制配置
-      setTimeout(function(){if(gallery.classList.contains('loading'))placeItems();},10000);
+      setTimeout(function(){if(!placed)placeItems();},10000);
     }
     // buildGallery is called after all functions are defined below
 
