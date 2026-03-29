@@ -267,11 +267,15 @@
       // 1カラム(スマホ)はバランス不要→直接配置してちらつき回避
       if(cols<=1){
         var col=document.createElement('div');col.className='masonry-col';gallery.appendChild(col);
-        W.forEach(function(g){
+        var vh=window.innerHeight;
+        var yPos=gallery.getBoundingClientRect().top;
+        W.forEach(function(g,i){
           var d=document.createElement('div');d.className='work-group';d.dataset.category='advertising';d.dataset.title=g[0];
           d.dataset.images=g[1].map(function(id){return T(id)+'w1600'}).join(',');
           var cnt=g[1].length;
           d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
+          // 最初の数件は画面内なので即visible（ちらつき防止）
+          if(i<6)d.classList.add('visible');
           col.appendChild(d);
         });
         document.querySelectorAll('.work-group').forEach(function(group){group.addEventListener('click',function(){openLightbox(group)});});
