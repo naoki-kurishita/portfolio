@@ -76,8 +76,8 @@
     @media (max-width: 1024px) { .masonry { gap: 1.2rem; } .masonry-col { gap: 1.2rem; } }
     @media (max-width: 600px) { .masonry { flex-direction: column; gap: 1rem; } .masonry-col { gap: 1rem; } }
 
-    .work-group { position: relative; overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .work-group.visible { opacity: 1; transform: translateY(0); }
+    .work-group { position: relative; overflow: hidden; cursor: pointer; }
+    .work-group.hidden { display: none; }
     .work-group.hidden { display: none; }
     .work-group img { width: 100%; display: block; transition: transform 0.6s ease; }
     .work-group:hover img { transform: scale(1.03); }
