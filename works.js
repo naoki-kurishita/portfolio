@@ -70,6 +70,7 @@ const W=[
   ["ブルボン ルマンド",["1jrj_ipj6xMc4H0PLessPWZEdnqEZaQBj", "1JGcZRSqSNrVHlpU9cHPVabe-wu4JB_vK"]],
   ["UNUBORE",["1kYAIBqJQlt7UbbQZDHL4mU6Er1AfO8jv", "1DfK8HT2UpS446LdnaKVhvlxzjuvEbFjt"]],
   ["Lashaddict",["1N-d85Lj9LtF7N90X-RFF_PUcodF1rXpb","1_BdCLmiYImXGdr5fXM_FjwStB60Aebtn","1pnWr7vLwgjEiIT3E2AtbBO_r3iJyUpHa","1PhQ_AhWemj8KkxxfADpJVLUBzX5XPGH3"]],
+  ["JA共済",["1ItuKVfv6Ex_IZTDQMB0XLV-Q1l9BWjqC","1gTiWv6xq6Cg76MgT_vd4Yi490GUPlAUX"]],
   ["mineo スルメ",["13VQA-xaEVEVPA2Mcz8RABNfjZZLXmL0h", "1CM7lZKtj8UIOvk9WMMzy9wXqRWC4pBm3"]],
   ["TCS",["16cNaihhzCGVVshorn05MfZ85dHzJFRVU", "1dYUl7BhdiiyJr3E24QsMFQ51QxMmFsva"]],
   ["BANDAI DRAGONBALL",["1eANTky8rb4CYH7tn8Bxu6zINxIvJvheL"]],
