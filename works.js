@@ -34,6 +34,7 @@ const W=[
   ["BOOK OFF",["1wDgOonnvA4xR820L4s9i3bzNLplBfJS-"]],
   ["CSP 2025",["1owEQYgXZKb8a-gN2rWTLHEBj39bH-dPY"]],
   ["RADWIMPS",["1RdV9LhoKcQgjzxqaSia2bZOuDcpZ-vRx","1XW8Va2vMCfCcn0hgBKmKcQesCGSiYDmp","1vGOcAJktA0m7N3BNOJ_z7p_HEds-rLby"]],
+  ["シルバー アンド ブラッド",["1H2B8druirLSVnfJ5ExFxQZ9HTQuUHwrR","1omoo4ufia68NHCddkeIVo-cwjM0gXfLp","15q0hhpkuvR2Pz-EsI3-GMfOcURlUPzSt"]],
   ["COMMERCIAL PHOTO",["1XvA392kkRzHGD91hOFPmiuv3jXOoK7Yr", "1KT6nASHK2PmCbCoJ88b8aJ4YkI1p80Tx"]],
   ["RESONA",["1AVD9H2lawAFt4jGFyLh4cQYldcG1qxim"]],
   ["mineo",["1zNlKJQDv1NXaY8d8LrI-_gXW2-65O6aE"]],
