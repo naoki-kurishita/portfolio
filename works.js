@@ -60,7 +60,7 @@ const W=[
   ["MYTREX MINI",["1T5LWts1_QySAO9LXcepWIU_BK6tnZWEC"]],
   ["SPIC TORNADOMART",["165Kh7_2mZQEk1MNTs8Tz95I4Y6gE-HT-", "1KwUjx_bzTd04Mlgx75zq8E_UxzIitX09", "1f09Jo9Vo11r2hCXPUVVdXkGrPwyGbZ1q", "1oDil-0Y1324-yI2BvADlRHRSvxbpb4KW", "1km_Gf7RgWluy9CER72KfIX8jxiA71vuS", "1mIe0IwAfoIWhQdbreUZ77kuvGdJW9nX1", "1_1iR8aaNjNFcBSePRmYyzBg8oudpNUn6"]],
   ["SPIC HIGH STREET",["1WXx6t0W1yFUZKL04aau92WrgrM1nAWmL", "13X-UW8yzQCym_4hYbu7eE1JQHyuou0yY", "17y3duWOl-sKz2-l6CFy753LDnH6-n7BK", "13fwxKpRs21QWG1ddk9YPHb7YWaI2miHG", "1P8aZYGYG6YHZP4Tux7CB1ZQV8d70nu7r", "1WfB0Vj7pcKfbj1O_WSzEgKX5ed3oCB-M"]],
-  ["ROHTO  メラノCC",["1jTX8uxahldIaGDT2Zws8ZH7LeLfKzuQ-"]],
+  ["ROHTO  メラノCC",["1jTX8uxahldIaGDT2Zws8ZH7LeLfKzuQ-","1-g-WhaGLeyPujFIkxIm85src0SE7sykt","1y2Iv8IeBx9c6R8bd7F7rWkRjMCHdgEX_","1-uxorX6UN4t9PDxreeZZQETjZOcvptX2","151InuQX_enlyPbxm9w7K4xb7ZF-hhOrx"]],
   ["amazon prime",["1i1OxWYuPyHzdfMIN1mKZPBdrX_P1aMfx"]],
   ["HIKARI MISO",["1TPhZHD6TME6uBX9qDPdgrvKh0BGIdlYq"]],
   ["nichicon エネパ",["1_YC1z1vF05qKSFnFFOip98_qnYqbW-I5"]],
