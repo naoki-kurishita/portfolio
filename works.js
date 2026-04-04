@@ -67,7 +67,7 @@ const W=[
   ["HIKARI MISO",["1TPhZHD6TME6uBX9qDPdgrvKh0BGIdlYq"]],
   ["nichicon エネパ",["1_YC1z1vF05qKSFnFFOip98_qnYqbW-I5"]],
   ["century21",["1kQXrd8QFYx-ns_nI2Ui6ajmaIatqyW9i"]],
-  ["JACK Coke",["1PoJe_4YwDWcq7gzNRAK2fu9QBbh3s_uW"]],
+  ["JACK Coke",["1PoJe_4YwDWcq7gzNRAK2fu9QBbh3s_uW","1kbhqQJkNm6DGB_SSzJcUNn3y7Szyxdoi"]],
   ["ブルボン ルマンド",["1jrj_ipj6xMc4H0PLessPWZEdnqEZaQBj", "1JGcZRSqSNrVHlpU9cHPVabe-wu4JB_vK"]],
   ["UNUBORE",["1kYAIBqJQlt7UbbQZDHL4mU6Er1AfO8jv","1DfK8HT2UpS446LdnaKVhvlxzjuvEbFjt","15e6vmCSKhndKi6USvsaTl2RU_YumA2_E","1OPU0_yU9aNAX6m8i_BDsXmlOhyhRXRgY","1OXV8RYNubwW63bMsgYgbIGkAqNgzZNYT","1yXyt_0Y3GjyBX1vt_AJigahRF1sfU01W","1IwC3Kw3KZXaDUpEH2rrHBeM5xLlPv1mJ"]],
   ["Lashaddict",["1N-d85Lj9LtF7N90X-RFF_PUcodF1rXpb","1_BdCLmiYImXGdr5fXM_FjwStB60Aebtn","1pnWr7vLwgjEiIT3E2AtbBO_r3iJyUpHa","1PhQ_AhWemj8KkxxfADpJVLUBzX5XPGH3"]],
