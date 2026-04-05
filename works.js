@@ -105,7 +105,7 @@ const W=[
   ["NTT 西日本",["1ysGwg9aNx7UCqRkPae4EeG-6gZ-yx5H8"]],
   ["MYTREX MiRAY",["1LK1ZQp7yzHjFa9ATZakOFeJ1DOj7LwcJ","1wzpCQlduR2o8HHcbMIxFqDW2HkgiwvtE"]],
   ["MYTREX HEAD",["1pMcPDA__vongg3pjGa2M-KOZ8q7hOhmG"]],
-  ["JCB",["1pkNb8W7y7B4YgYmoBt696QatrWKdNHD1"]],
+  ["JCB",["1pkNb8W7y7B4YgYmoBt696QatrWKdNHD1","1YWohrkJEbRG9zhqy9WGA_W1uXkR-MTO4","1bduVqYwJBZ76yIU6QcY-cDm4SjCJSK6J","1DGX_uK53eHRiTk4l0Xf-L-FqKN46hzAN"]],
   ["Coca Cola",["1Y8b0L-b5Vf4rvRmjMMO8g8mfqJx8NLyW"]],
   ["docomo U15",["1vQWcw7LKMFZUWqkxts9hOqHyFme4Vr8e"]],
   ["UFJ_1",["1ILrJEp0ixAu8YbWoGZ8EhD4P15d2uhQe"]],
