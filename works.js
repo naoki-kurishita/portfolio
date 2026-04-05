@@ -119,7 +119,7 @@ const W=[
   ["suntory soda",["1eQbVo-wA6PJSfzI9TQE61k_pMcXliLxB"]],
   ["ヘブンバーンズレッド 2nd",["1Fti7fxxKkCbpeFSqkSCULBy1_Dsc2dIo", "1yafsehZllL7UOs_t8lHoKF6mx-2xXbKs", "1Lc0ZNqrzjcy5HeVXWazJ9AMyAzjK7BFP", "100eqWZX16VmPAUafSkDSZZeHlHCyqtxZ"]],
   ["SONIC FRONTIERS",["1VZmlT7R8L_49yxPinW61lT2r8aSpwAT7", "1-cbPEeOwyNPhSa1KF3-JF5BvJ7DbMmR-"]],
-  ["FESTINO",["1t0Qt6Uo91wGTFdXqHnRDPuDRdRwNgkKZ"]],
+  ["FESTINO",["1t0Qt6Uo91wGTFdXqHnRDPuDRdRwNgkKZ","1a07HxwEtOIQtnqRoYXxyx7CHIUwe4tyL","1br4pwqaocsjfQR4vFewTwgau6Hl28xVx","1gbxI0uti5VoBHuZ_-L8exbBEhb42lSZR"]],
   ["YOLU",["15ow7RcIlNc8pNPINIFBy48Bv1ueH1fD7", "1s71xH_G43hyd4azO6kTlLXdrdknGY9rx"]],
   ["povo ギガゲーム",["1gQOPpSIvng9KY5WHKnSUwaOdSUgkAt2C"]],
   ["Takara standard",["1BRGaxKfLwgMpf28QG9grC_KbQG6UFTSV", "1l0Pj1-1qjK5uOGBy1tl6eiM6PidjZOSg"]],
@@ -198,7 +198,7 @@ const W=[
   ["コトダマン",["1cnJRQ9If6RsJe2CfabvrgF_1PjcUdSZL"]],
   ["日本赤十字社",["1RoHEs0qanHofzn6gw4T3RBt33UUvj-go", "1kMG4QT65T0iNUVt3ApIxbc_b7A9UWLUq", "18D4olDvXbluosvr6a_ecOd6nfRctNknW", "1snhuns-WNPlppDOn4Wzus2Z1xR1PR9VX", "1lYf71SkZa7u3vVhlINDVJARwm5bJhhYg", "1A1dJZAuhNAQqF-meH98aoZKi7Z33cId9"]],
   ["DCcard",["1w5YSAp6aWqnIA9oAgV1vgZzCWXQO-X9k", "1wtf3VFgkum4yq6C1NERlLXjnCUdAfvOa"]],
-  ["NEC Face The World",["1uSbkUGyZGi6jlcDva6Ml3wDg93AJDBMb", "1g24CRkzTS-QbKV0dY_COPwou1DyVlzLe", "11wn5u7z7RnBAl1fT6nPsnInNuAFw4Ezp", "16vgmw-J-dhI0UQkEpC14WInCsIiptJIn"]],
+  ["NEC Face The World",["1uSbkUGyZGi6jlcDva6Ml3wDg93AJDBMb","1g24CRkzTS-QbKV0dY_COPwou1DyVlzLe","11wn5u7z7RnBAl1fT6nPsnInNuAFw4Ezp","16vgmw-J-dhI0UQkEpC14WInCsIiptJIn","1TXMsCzKlfDG3x_VDjaNWI9zd5cEHHXEd"]],
   ["BULK HOMME",["1nl7DrWQb4P-8j-Jt5V-PK1kuhIUpGqp0", "1QJU89wCX9VR_3by07uJZ4g7rKDjdx8Dl", "1zkn3akNaL1NCvMbPOVmJ_-ycdkJ3FWH0", "1bd8Obd_6haebmmMdZjZClb0r_3rCO12O"]],
   ["MadreX",["1vQ_j95aPoMGA-eaTwBGxsZkNqvPek56z", "1tplP7pbfwxy3ZnoSBA0UXlEQy85-gi6q", "1HDScar8hgGJ9OX1KSckUZwzY3SZhzTkz", "1eUQjXKLv9g4SCcoE-wpVr-k_ZPmjUelX", "1_SKfB6j_4oSvR6KgA3qfffy_sbRHg_Ie", "1Rq1k1CaIwA48WG_TFx-OKu16GW3cWeJp", "1rV61M3RzhJHUI-ePpILJF81BD4mif7Wz", "19uIAqdxWNkXxaT3r5lXBxXXQEKDJNK57", "1ImjIfxAAP6KnhDBYrS34wFhLfp7T9Gx1", "1YW4F2XyfpM4H_YYRxEmlA38tB67Q_gBu"]]
 ];
