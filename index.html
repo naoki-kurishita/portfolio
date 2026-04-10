@@ -67,9 +67,10 @@
     .section-label { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300; letter-spacing: 0.15em; margin-bottom: 1rem; }
     .section-line { width: 60px; height: 1px; background: var(--text); margin-bottom: 4rem; }
 
-    .filter-bar { display: flex; gap: 1.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
-    .filter-btn { background: none; border: 1px solid var(--border); padding: 0.5rem 1.5rem; font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.15em; cursor: pointer; transition: var(--transition); color: var(--text-light); }
-    .filter-btn.active, .filter-btn:hover { background: var(--text); color: #fff; border-color: var(--text); }
+    .search-bar { margin-bottom: 3rem; max-width: 400px; }
+    .search-input { width: 100%; padding: 0.6rem 0; border: none; border-bottom: 1px solid var(--border); background: transparent; font-family: var(--font-body); font-size: 0.85rem; font-weight: 300; color: var(--text); letter-spacing: 0.08em; outline: none; transition: border-color 0.3s; }
+    .search-input::placeholder { color: var(--text-light); letter-spacing: 0.1em; font-weight: 200; }
+    .search-input:focus { border-color: var(--text); }
 
     .masonry { display: flex; gap: 1.5rem; transition: opacity 0.4s ease; }
     .masonry.loading { opacity: 0; }
@@ -86,7 +87,7 @@
     .work-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: flex-end; padding: 1.5rem; opacity: 0; transition: opacity 0.4s ease; }
     .work-group:hover .work-overlay { opacity: 1; }
     .work-overlay-text h3 { font-family: var(--font-display); font-size: 1.3rem; color: #fff; font-weight: 400; letter-spacing: 0.05em; }
-    .work-overlay-text p { font-size: 0.7rem; color: rgba(255,255,255,0.7); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.3rem; }
+
 
     .work-more { position: absolute; right: 0; top: 0; bottom: 0; width: 2.5rem; display: flex; align-items: center; justify-content: center; background: linear-gradient(to right, transparent, rgba(0,0,0,0.25)); opacity: 0.6; transition: opacity 0.4s ease; pointer-events: none; }
     .work-group:hover .work-more { opacity: 1; }
@@ -188,9 +189,8 @@
   <section id="works">
     <h2 class="section-label reveal">Works</h2>
     <div class="section-line reveal"></div>
-    <div class="filter-bar reveal">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="advertising">Advertising</button>
+    <div class="search-bar reveal">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search by title...">
     </div>
     <div class="masonry" id="gallery"></div>
   </section>
@@ -271,10 +271,10 @@
         var vh=window.innerHeight;
         var yPos=gallery.getBoundingClientRect().top;
         W.forEach(function(g,i){
-          var d=document.createElement('div');d.className='work-group';d.dataset.category='advertising';d.dataset.title=g[0];
+          var d=document.createElement('div');d.className='work-group';d.dataset.title=g[0];
           d.dataset.images=g[1].map(function(id){return T(id)+'w1600'}).join(',');
           var cnt=g[1].length;
-          d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
+          d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'" loading="lazy"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
           // 最初の数件は画面内なので即visible（ちらつき防止）
           if(i<6)d.classList.add('visible');
           col.appendChild(d);
@@ -302,7 +302,7 @@
         d.dataset.title=g[0];
         d.dataset.images=g[1].map(function(id){return T(id)+'w1600'}).join(',');
         var cnt=g[1].length;
-        d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3><p>Advertising</p></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
+        d.innerHTML='<img src="'+T(g[1][0])+'w800" alt="'+g[0]+'"><div class="work-overlay"><div class="work-overlay-text"><h3>'+g[0]+'</h3></div></div><div class="work-more'+(cnt===1?' single':'')+'"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></div>';
         items.push(d);
         offscreen.appendChild(d);
       });
@@ -372,10 +372,16 @@
     menuToggle.addEventListener('click',function(){menuToggle.classList.toggle('active');navOverlay.classList.toggle('active');document.body.style.overflow=navOverlay.classList.contains('active')?'hidden':'';});
     document.querySelectorAll('.nav-list a').forEach(function(link){link.addEventListener('click',function(){menuToggle.classList.remove('active');navOverlay.classList.remove('active');document.body.style.overflow='';});});
 
-    // ===== FILTER =====
-    var filterBtns=document.querySelectorAll('.filter-btn');
+    // ===== SEARCH =====
     var workGroups=document.querySelectorAll('.work-group');
-    filterBtns.forEach(function(btn){btn.addEventListener('click',function(){filterBtns.forEach(function(b){b.classList.remove('active')});btn.classList.add('active');var filter=btn.dataset.filter;workGroups.forEach(function(item){if(filter==='all'||item.dataset.category===filter){item.classList.remove('hidden')}else{item.classList.add('hidden')}});});});
+    var searchInput=document.getElementById('searchInput');
+    searchInput.addEventListener('input',function(){
+      var q=this.value.toLowerCase().trim();
+      workGroups.forEach(function(item){
+        var title=(item.dataset.title||'').toLowerCase();
+        if(!q||title.indexOf(q)!==-1){item.classList.remove('hidden')}else{item.classList.add('hidden')}
+      });
+    });
 
     // ===== GROUP LIGHTBOX =====
     var lightbox=document.getElementById('lightbox');
