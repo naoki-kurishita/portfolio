@@ -118,7 +118,7 @@ const W=[
   ["花咲牧場",["1zUDUij78V-pMkjXG_jdZUGNv6a5vCFof"]],
   ["suntory soda",["1eQbVo-wA6PJSfzI9TQE61k_pMcXliLxB"]],
   ["ヘブンバーンズレッド 2nd",["1Fti7fxxKkCbpeFSqkSCULBy1_Dsc2dIo","1yafsehZllL7UOs_t8lHoKF6mx-2xXbKs","14Y8TEQIfetOmSRhZrshhe2S9US6GITwo"]],
-  ["ヘブンバーンズレッド 3rd",["1Lc0ZNqrzjcy5HeVXWazJ9AMyAzjK7BFP","100eqWZX16VmPAUafSkDSZZeHlHCyqtxZ","1UxaYGCweol9ZPR81JHLb4F5dS2rAQqJh","1NU5hFp0xg_Ipd1PLo_D2cdVjx8NALHXr","1BeZRWFhbeuzro7ZGULE90YkAFkomR62Z","19TVIjfhGv3pax6U63TOyuQJzHfnrY-Wc","1ESVK39Ct5bNWvCzUhOmaAdcPnNKHjJyM"]],
+  ["ヘブンバーンズレッド 3rd",["1Lc0ZNqrzjcy5HeVXWazJ9AMyAzjK7BFP","100eqWZX16VmPAUafSkDSZZeHlHCyqtxZ","1NU5hFp0xg_Ipd1PLo_D2cdVjx8NALHXr","1BeZRWFhbeuzro7ZGULE90YkAFkomR62Z","19TVIjfhGv3pax6U63TOyuQJzHfnrY-Wc","1ESVK39Ct5bNWvCzUhOmaAdcPnNKHjJyM"]],
   ["SONIC FRONTIERS",["1VZmlT7R8L_49yxPinW61lT2r8aSpwAT7", "1-cbPEeOwyNPhSa1KF3-JF5BvJ7DbMmR-"]],
   ["FESTINO",["1t0Qt6Uo91wGTFdXqHnRDPuDRdRwNgkKZ","1a07HxwEtOIQtnqRoYXxyx7CHIUwe4tyL","1br4pwqaocsjfQR4vFewTwgau6Hl28xVx","1gbxI0uti5VoBHuZ_-L8exbBEhb42lSZR"]],
   ["YOLU",["15ow7RcIlNc8pNPINIFBy48Bv1ueH1fD7", "1s71xH_G43hyd4azO6kTlLXdrdknGY9rx"]],
