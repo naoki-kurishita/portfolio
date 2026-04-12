@@ -141,7 +141,7 @@ const W=[
   ["Mitsui Chemicals",["1FUxtUY16L5M-K8ht9D-kcxdZ4nteHx3H", "1fKEcjITPPgXa-JDzyeva1nykqCNzJBiF"]],
   ["SOMPO One Spirit",["1RUNIfMEPKPnP_tps_jfXPI4APWKl2BkV"]],
   ["Surface",["1EZogbUtK6cOcYxUMLwbVytMC4lu0Xaph", "1e1fkRCNcPVO4OwNcCVUJ-iBouzv4yrX8"]],
-  ["amazon",["1XuF3kla5o6oIXjEIUdPIrZx6aykxuHfS", "1z0PhWks8N_Ov6SfxTI-nbuX061Q1lDFa"]],
+  ["amazon",["1XuF3kla5o6oIXjEIUdPIrZx6aykxuHfS","1Nms8THsUA6ENOX0Zo4tmmXJ5ht2c4q-R","1z0PhWks8N_Ov6SfxTI-nbuX061Q1lDFa","1tsY17-nJYSVxACqDmj5ZzK1-y9lAkOJq","1jAsbjfXIs4fP-LolJVwYrizEyBMI6w6h","15acJYHj2T8dJ6np9Kw7MFn-81cY45Ndr","1_1_Q8Uqj7THwTK2t9mRLUOjmTzZ3hgwa"]],
   ["朝日広告賞",["1FGhf0GTFPSrKCeaMXBmpIsMOMBzarUJN", "1yOt9014PhcUbIdlmM6EdjB0vbJQE2HJF"]],
   ["損保ジャパン",["18Qd8_bX5yrcRJMupptZOJ2V2j0K2RC6H"]],
   ["UCC",["11YsprZGk1d0RAUV0XodKlhyhKQvfDkJg"]],
