@@ -106,7 +106,7 @@ const W=[
   ["MYTREX MiRAY",["1LK1ZQp7yzHjFa9ATZakOFeJ1DOj7LwcJ","1wzpCQlduR2o8HHcbMIxFqDW2HkgiwvtE"]],
   ["MYTREX HEAD",["1pMcPDA__vongg3pjGa2M-KOZ8q7hOhmG"]],
   ["JCB",["1pkNb8W7y7B4YgYmoBt696QatrWKdNHD1","1YWohrkJEbRG9zhqy9WGA_W1uXkR-MTO4","1bduVqYwJBZ76yIU6QcY-cDm4SjCJSK6J","1DGX_uK53eHRiTk4l0Xf-L-FqKN46hzAN"]],
-  ["Coca Cola",["1Y8b0L-b5Vf4rvRmjMMO8g8mfqJx8NLyW"]],
+  ["Coca Cola",["1Y8b0L-b5Vf4rvRmjMMO8g8mfqJx8NLyW","1MBvX0G_IMp2b2Vm11dl2YHPZjMGMhApr"]],
   ["docomo U15",["1vQWcw7LKMFZUWqkxts9hOqHyFme4Vr8e"]],
   ["UFJ_1",["1ILrJEp0ixAu8YbWoGZ8EhD4P15d2uhQe"]],
   ["kahochan",["1rG-TWhlUtG1VM3Nhfga3R3DyM3CzJGeT","1pf7ucz2ZBXFaPh8oXmu5L-1jpCyd5Y_T","1mPLtgCLXAS69hjj3GeNccTQ5CBHVPDXL","1RwO8sPhAZ_2JnSwN92UG2vA04X2Q2XmT","1vX3JbOf3yESTZu1Ig-47Tr2_f7YUtBjz","1PD66pbc-tr-ke2IsCYAjnMkIFt9CBWVX","1FSYeaBMAZph88uKR75_2Csnred62Rv10"]],
