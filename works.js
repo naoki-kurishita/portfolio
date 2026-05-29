@@ -17,6 +17,8 @@
 //   3. 同一案件の画像は1つのエントリ内にIDを番号順で並べる
 // ==============================
 const W=[
+  ["ラグビー リポビタンDチャレンジカップ2026",["1OU1mpBJ_uDLoNm1JNRMS0O3em3o6coLu"]],
+  ["ラグビー NCS2026",["1_c8HYBdB-0vBRtG1x3WjJsN55R8dzVES"]],
   ["ACジャパン",["1oNGi9PLXrw9KepZwz4jqWywvoagcIZg-"]],
   ["MSTAGE",["1KJQFHRjNV6IO-eqmGMQ2QbwEQeteKbWe","1tClnf5sfBsBpO4LinddHZGbFJfxD9LD0"]],
   ["東急建設",["1Dkfd95dIhY6nDYF0qhHyhugL2HJXUzMW"]],
