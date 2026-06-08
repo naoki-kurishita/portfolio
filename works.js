@@ -17,6 +17,8 @@
 //   3. 同一案件の画像は1つのエントリ内にIDを番号順で並べる
 // ==============================
 const W=[
+  ["完全メシパン CHOCO",["1MkGwpTFO45EAb0iiY2Kaoy1UERGtyNA6"]],
+  ["RADWIMPS 20th",["113mTM06-uONKwij79pA17Evqtfc7GpED","1W7fLGTXGwrKGi73PfjsSV0w8_uWaXR_u"]],
   ["ラグビー リポビタンDチャレンジカップ2026",["1OU1mpBJ_uDLoNm1JNRMS0O3em3o6coLu"]],
   ["ラグビー NCS2026",["1_c8HYBdB-0vBRtG1x3WjJsN55R8dzVES"]],
   ["ACジャパン",["1oNGi9PLXrw9KepZwz4jqWywvoagcIZg-"]],
