@@ -44,6 +44,7 @@ const W = [
   ["CHINTAI AIええやん", ["1ZsrntFin2wS8PSAeOfqGwdbZhnMoxhap", "1WISSgUwnb08DlXH1qxK6UiIZ7Y8Nmko8"]],
   ["meito Nuts", ["1acVtYtU4sCKLQzL9gLysyW1aazIkuMq6"]],
   ["TOKYU 安心安全編", ["1J7-uu1K9JoidhjbSkMB_oBOpF3m33bOE", "17ieJ-5PNm0bzCQY2ntRZ5eolBSrT7x9n"]],
+  ["LEXUS", ["19yLy7azwbRRWdNWaNnZ7ZywEvD63xo6a", "11j3u5G-K0O9o6fuGoX7JeQ8nNZAnPg4-", "1Tfm7ykz_afWQcygOAmu1K8ln3ZXk4IaP", "1GYREeXeW2beoOJdOUqgJxeEQkXdBEGpj"]],
   ["民間救急", ["1QXayVhpTIddHzrMOPb2LPNrkABy6S-1K", "1n5EOP_p-nqHrqGe8fXwFsT31cAeLyvhy", "1LsKlC_34HEiJIdA_HiHNFlCO-t1A0I6c", "1z-sZnVCWRSaQ4avksNIsmrbGMzKs_zTa", "1SRLjoAo1d9D_XI4RFmlRLOWqFbko9Dmu", "1nMW_AeKO-AXOWcJFJ_YPwr-1IAQoIHTP", "12b3t1KOiGxSsBFeW8bJ7puQJoB74NOZj", "1PKACXXJAnKkGf9RYSjsrZkpWN5Ddj6kt", "1H0CyoPBCaHLzT4JOZo8kjpiIoDPBeaFB", "1zg0jFokqhj2X8k5vdhfR8spHwHJVEW6K", "1V8PWX3fjLtCeOtUmpHV_eF01flV3LJgh"]],
   ["Cup Star ほたて塩", ["1YhiNiMVX8XncKfVLBjpIQ9m0gHyJ-_aW"]],
   ["sonpo 地震保険", ["1w5N05ZYcbqJk5IeP2rVCEIbcktRgX_Z6"]],
