@@ -17,6 +17,8 @@
 //   3. 同一案件の画像は1つのエントリ内にIDを番号順で並べる
 // ==============================
 const W = [
+  ["BOOK OFF SUPER BAZAAR", ["1INxqZLVShGRS42Ap7lgeqQ3_-rlzjRJZ"]],
+  ["WORKMAN", ["1NpMwveZ9NocGddmAKiib-MskpCOBtSoJ", ["1Pgqqun2B9EbUaeuKGH9L7JPsQIuWtvON"]]],
   ["meito", ["1fF3CmjzhUSvEkGNHrirgj2FM5kcFg77h", "1SB4t56eZt1QQs_p88wAg2rcxVP2cGwdC"]],
   ["TOKYU Q SKIP", ["15w4_7FEMdSbzRpBYjo-XGvclkZRqxiEP", "1ndlP_Apc2qSXNH7TxNwepxr8_yibAnn-"]],
   ["HOT PEPPER Beauty", ["1joGxX8i-B98jttEKgiRHLiLvKWnl79P1", "18ms-MBL7ETNaIGdmHPXGGX3vYzwPVv7F"]],
