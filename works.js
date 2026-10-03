@@ -25,6 +25,7 @@ const W = [
   ["meito", ["1fF3CmjzhUSvEkGNHrirgj2FM5kcFg77h", "1SB4t56eZt1QQs_p88wAg2rcxVP2cGwdC"]],
   ["TOKYU Q SKIP", ["15w4_7FEMdSbzRpBYjo-XGvclkZRqxiEP", "1ndlP_Apc2qSXNH7TxNwepxr8_yibAnn-"]],
   ["HOT PEPPER Beauty", ["1joGxX8i-B98jttEKgiRHLiLvKWnl79P1", "18ms-MBL7ETNaIGdmHPXGGX3vYzwPVv7F"]],
+  ["SPIC 30th", ["1jaSz8Uzj5glVSzlmwcWl1EMrQT9i-jv-"]],
   ["meiji makes medicine", ["1yKljZcr_joDKZR29sWBbJ7UgAhz0fB6d"]],
   ["中部電力ミライズ", ["1drScU9FPdRKlwweXaKJhgQRilugg9QZ4", "18YRA8yUT6c89Ps1BCq-RWoe1Us5hg6-Y"]],
   ["まねきや いいわ値", ["1omx2V9xYyRtcTYeztudz9bzc7W7NnJXa"]],
