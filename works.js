@@ -17,6 +17,12 @@
 //   3. 同一案件の画像は1つのエントリ内にIDを番号順で並べる
 // ==============================
 const W = [
+  ["meito", ["1fF3CmjzhUSvEkGNHrirgj2FM5kcFg77h", "1SB4t56eZt1QQs_p88wAg2rcxVP2cGwdC"]],
+  ["TOKYU Q SKIP", ["15w4_7FEMdSbzRpBYjo-XGvclkZRqxiEP", "1ndlP_Apc2qSXNH7TxNwepxr8_yibAnn-"]],
+  ["HOT PEPPER Beauty", ["1joGxX8i-B98jttEKgiRHLiLvKWnl79P1", "18ms-MBL7ETNaIGdmHPXGGX3vYzwPVv7F"]],
+  ["meiji makes medicine", ["1yKljZcr_joDKZR29sWBbJ7UgAhz0fB6d"]],
+  ["中部電力ミライズ", ["1drScU9FPdRKlwweXaKJhgQRilugg9QZ4", "18YRA8yUT6c89Ps1BCq-RWoe1Us5hg6-Y"]],
+  ["まねきや いいわ値", ["1omx2V9xYyRtcTYeztudz9bzc7W7NnJXa"]],
   ["TCL", ["10Phjm0RllIxThav_wk_1FVUHvDDewp7z", "1Ywgxmkv5_JsMkeW8_tx-8XKot8a2YNdQ", "10LFWHyYuSr88amfCF8H0JQG2KA6f0-xx"]],
   ["完全メシパン CHOCO", ["1MkGwpTFO45EAb0iiY2Kaoy1UERGtyNA6"]],
   ["RADWIMPS 20th", ["113mTM06-uONKwij79pA17Evqtfc7GpED", "1W7fLGTXGwrKGi73PfjsSV0w8_uWaXR_u"]],
