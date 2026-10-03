@@ -17,7 +17,10 @@
 //   3. 同一案件の画像は1つのエントリ内にIDを番号順で並べる
 // ==============================
 const W = [
+  ["HENNGE 怪獣編", ["11kNVOL3flb5gL98Yo_O5NY6AhQNLFzr3", "1jA79FF9rNlElNd1LXeP0i51G_1DwFw6U", "1LlhTR-TULjVIBKfzl2QMVHj9ZFypJYy2", "1qnwywCYdfx4_2eQKNIB81AmJTL79MOpl"]],
+  ["俺のミルク", ["14j1i-iWPhQI8mBN3RcON1bodeASbMWxc"]],
   ["BOOK OFF SUPER BAZAAR", ["1INxqZLVShGRS42Ap7lgeqQ3_-rlzjRJZ"]],
+  ["叙々苑", ["1-ZpFzoSQu6nuEeXRzPG2AU1PngILTSze"]],
   ["WORKMAN", ["1NpMwveZ9NocGddmAKiib-MskpCOBtSoJ", ["1Pgqqun2B9EbUaeuKGH9L7JPsQIuWtvON"]]],
   ["meito", ["1fF3CmjzhUSvEkGNHrirgj2FM5kcFg77h", "1SB4t56eZt1QQs_p88wAg2rcxVP2cGwdC"]],
   ["TOKYU Q SKIP", ["15w4_7FEMdSbzRpBYjo-XGvclkZRqxiEP", "1ndlP_Apc2qSXNH7TxNwepxr8_yibAnn-"]],
